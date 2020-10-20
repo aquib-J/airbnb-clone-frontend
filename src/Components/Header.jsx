@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-// import DatePicker from 'react-datepicker';
-// import 'react-datepicker/dist/react-datepicker';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import {
   Box,
@@ -17,8 +17,6 @@ import {
   Icon,
   Text,
   PseudoBox,
-  ButtonGroup,
-  Divider,
   Input,
   Stack,
 } from "@chakra-ui/core";
@@ -32,6 +30,8 @@ class Header extends Component {
 
     this.state = {
       show: false,
+      startDate: new Date(),
+      endDate: new Date(),
     };
   }
 
@@ -41,7 +41,22 @@ class Header extends Component {
     });
   };
 
+  setStartDate = (date) => {
+    this.setState({
+      startDate: date,
+    });
+  };
+  setEndDate = (date) => {
+    this.setState({
+      endDate: date,
+    });
+  };
   render() {
+    const ExampleCustomInput = ({ value, onClick }) => (
+      <Button onClick={onClick} color="#adb1c6" bg="none" variant="link">
+        {value}
+      </Button>
+    );
     return (
       <Box px="80px" w="100%" position="fixed" bg="white">
         <Flex justify="space-between" py={4} flexWrap="wrap">
@@ -146,11 +161,11 @@ class Header extends Component {
                     size="sm"
                   />
                 </Flex>
-                <Button
+                <PseudoBox
                   rounded="50px"
                   bg="none"
                   px={16}
-                  py={8}
+                  py={3}
                   m="0"
                   as="button"
                   _hover={{ bg: "#ebebeb" }}
@@ -159,17 +174,26 @@ class Header extends Component {
                     <Box>
                       <Text fontWeight={600}>Check In</Text>
                     </Box>
-                    <Box>
+                    {/* <Box>
                       <Text color="#adb1c6" fontWeight="200">
                         Add Dates
                       </Text>
-                    </Box>
+                    </Box> */}
+                    <DatePicker
+                      selected={this.state.startDate}
+                      selectsStart
+                      dateFormat="dd/MM/yyyy"
+                      onChange={this.setStartDate}
+                      startDate={this.state.startDate}
+                      endDate={this.state.endDate}
+                      customInput={<ExampleCustomInput />}
+                    ></DatePicker>
                   </Stack>
-                </Button>
-                <Button
+                </PseudoBox>
+                <PseudoBox
                   rounded="50px"
                   px={16}
-                  py={8}
+                  py={3}
                   bg="none"
                   m="0"
                   as="button"
@@ -177,15 +201,25 @@ class Header extends Component {
                 >
                   <Stack spacing={0} textAlign="left">
                     <Box>
-                      <Text fontWeight={600}>Check In</Text>
+                      <Text fontWeight={600}>Check Out</Text>
                     </Box>
-                    <Box>
+                    {/* <Box>
                       <Text color="#adb1c6" fontWeight="200">
                         Add Dates
                       </Text>
-                    </Box>
+                    </Box> */}
+                    <DatePicker
+                      selected={this.state.endDate}
+                      selectsEnd
+                      dateFormat="dd/MM/yyyy"
+                      onChange={this.setEndDate}
+                      startDate={this.state.startDate}
+                      endDate={this.state.endDate}
+                      minDate={this.state.startDate}
+                      customInput={<ExampleCustomInput />}
+                    ></DatePicker>
                   </Stack>
-                </Button>
+                </PseudoBox>
                 <Button
                   rounded="50px"
                   px={8}
@@ -196,11 +230,11 @@ class Header extends Component {
                 >
                   <Stack spacing={0} mr={10} textAlign="left">
                     <Box>
-                      <Text fontWeight={600}>Check In</Text>
+                      <Text fontWeight={600}>Guests</Text>
                     </Box>
                     <Box>
                       <Text color="#adb1c6" fontWeight="200">
-                        Add Dates
+                        Add Guests
                       </Text>
                     </Box>
                   </Stack>
