@@ -8,7 +8,7 @@ class Hero extends Component {
         backgroundImage="url('https://static.yancey.app/18084f37-67e0-400f-bfd8-55eea0e89508.jpg')"
         backgroundPosition="center"
         h="80vh"
-        backgroundSize="100%"
+        backgroundSize="100% 100%"
         backgroundRepeat="no-repeat"
         px="80px"
         alignItems="center"

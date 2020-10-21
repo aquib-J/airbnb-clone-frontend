@@ -58,7 +58,15 @@ class Header extends Component {
       </Button>
     );
     return (
-      <Box px="80px" w="100%" position="fixed" bg="white">
+      <Box
+        px="80px"
+        w="100%"
+        position="sticky"
+        top={0}
+        bg="white"
+        zIndex={10}
+        boxShadow="0px 2px 4px rgba(0, 0, 0, 0.18)"
+      >
         <Flex justify="space-between" py={4} flexWrap="wrap">
           <Flex alignItems="flex-start" pt={2}>
             <Image h="32px" w="102px" src={Logo} alt="Logo" cursor="pointer" />
@@ -134,7 +142,7 @@ class Header extends Component {
             </Menu>
           </Box>
           <Box w="100%"></Box>
-          <Flex w="100%" justify="center" mt={4}>
+          <Flex w="100%" justify="center">
             <Collapse isOpen={this.state.show}>
               <Flex
                 align="center"
@@ -142,6 +150,7 @@ class Header extends Component {
                 borderRadius="50px"
                 borderColor="#dddddd"
                 fontSize="14px"
+                mt={4}
               >
                 <Flex
                   variantColor="teal"
