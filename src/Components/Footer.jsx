@@ -15,7 +15,7 @@ import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 class Footer extends Component {
   render() {
     return (
-      <Box px="80px" bg="#f7f7f7" pt={10}>
+      <Box px="80px" bg="#f7f7f7" pt={10} fontFamily="montserrat">
         <SimpleGrid minChildWidth="120px" spacing="40px" pb={5} fontSize={14}>
           <Stack>
             <Text fontWeight={700}>About</Text>

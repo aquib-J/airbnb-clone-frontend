@@ -6,6 +6,7 @@ import Header from "./Components/Header";
 import ExploreNearby2 from "./Components/HomePage/ExploreNearby2";
 import Hero from "./Components/HomePage/Hero";
 import LisitngsPage from "./Components/ListingsFromSearch/LisitngsPage";
+import MainListingShowCase from "./Components/MainListingShowCase/MainListingShowCase";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
@@ -13,9 +14,10 @@ ReactDOM.render(
     <ThemeProvider>
       <CSSReset />
       <Header />
-      <LisitngsPage />
+      {/* <LisitngsPage /> */}
       {/* <Hero />
       <ExploreNearby2 /> */}
+      <MainListingShowCase />
       <Footer />
     </ThemeProvider>
   </React.StrictMode>,
