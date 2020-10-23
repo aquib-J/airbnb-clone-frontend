@@ -1,17 +1,16 @@
 import { Box, Divider, Flex, IconButton, Image, Text } from "@chakra-ui/core";
 import React, { Component } from "react";
-import { AiOutlineHeart, AiOutlineStar } from "react-icons/ai";
+import { AiFillStar, AiOutlineHeart, AiOutlineStar } from "react-icons/ai";
 
 class ListingCard extends Component {
   render() {
     const {
-      subtitle,
-      title,
-      url,
+      listingDescription,
+      images,
       bookmark,
-      amenities,
-      rating,
-      price,
+      avgRating,
+      pricePerDay,
+      features,
     } = this.props;
     return (
       <Box
@@ -22,12 +21,13 @@ class ListingCard extends Component {
         my={5}
         display={{ md: "flex" }}
       >
-        <Image src={url} alt="Woman paying for a purchase" />
-
+        <Box w={{ lg: "22%", md: "100%" }}>
+          <Image src={images[0].url} alt="Woman paying for a purchase" />
+        </Box>
         <Box py="4" px="6" flex="1">
           <Flex w="100%" justify="space-between" alignItems="baseline">
             <Text as="i" fontSize="12px" fontWeight={500}>
-              {subtitle}
+              {features.typeofListing}
             </Text>
             <IconButton
               aria-label="Search database"
@@ -44,12 +44,19 @@ class ListingCard extends Component {
             lineHeight="tight"
             isTruncated
           >
-            {title}
+            {listingDescription}
           </Box>
           <Divider w={20} />
           <Box>
             <Box as="span" color="gray.600" fontSize="sm">
-              {amenities}
+              {Object.keys(features).reduce((acc, feature) => {
+                if (Number.isFinite(features[feature])) {
+                  if (feature == "maxOccupants")
+                    acc = acc + `${features[feature]} guests · `;
+                  else acc = acc + `${features[feature]} ${feature} · `;
+                }
+                return acc;
+              }, "")}
             </Box>
           </Box>
 
@@ -61,15 +68,17 @@ class ListingCard extends Component {
           >
             <Box as="span" d="flex" alignItems="center" color="gray.600">
               <Box
-                as={AiOutlineStar}
-                size="32px"
+                as={AiFillStar}
+                size="24px"
                 display="inline"
-                color="yellow.300"
+                color="#f24b5b"
               />
-              {rating}
+              <Text fontFamily="montserrat" fontSize="16px" ml={1}>
+                {avgRating}
+              </Text>
             </Box>
             <Box fontWeight={700} fontSize="lg">
-              &#x20B9;{price}
+              &#x20B9;{pricePerDay}
               <Box as="span" fontSize="sm">
                 /night
               </Box>

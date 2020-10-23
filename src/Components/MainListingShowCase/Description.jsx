@@ -1,16 +1,8 @@
-import {
-  Box,
-  Divider,
-  Flex,
-  Heading,
-  Icon,
-  Stack,
-  Text,
-} from "@chakra-ui/core";
+import { Box, Divider, Flex, Heading, Stack, Text } from "@chakra-ui/core";
 import React, { Component } from "react";
 import { AiOutlineSolution } from "react-icons/ai";
 import { BsHouse } from "react-icons/bs";
-import { FaBan, FaBed, FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
+import { FaBan, FaBed, FaRegThumbsUp } from "react-icons/fa";
 
 export class Description extends Component {
   render() {

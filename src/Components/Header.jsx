@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Link } from "react-router-dom";
 
 import {
   Box,
@@ -19,6 +20,20 @@ import {
   PseudoBox,
   Input,
   Stack,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+  IconButton,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
 } from "@chakra-ui/core";
 import Logo from "../Assets/logo3.png";
 import { AiOutlineGlobal, AiOutlineUser } from "react-icons/ai";
@@ -32,12 +47,20 @@ class Header extends Component {
       show: false,
       startDate: new Date(),
       endDate: new Date(),
+      location: "",
+      guests: 0,
     };
   }
 
   handleToggle = () => {
     this.setState({
       show: this.state.show ? false : true,
+    });
+  };
+
+  handleInputChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -97,7 +120,6 @@ class Header extends Component {
               </Box>
             </PseudoBox>
           </Flex>
-
           <Box>
             <Button
               mx={2}
@@ -168,13 +190,16 @@ class Header extends Component {
                     variant="unstyled"
                     placeholder="Where are you going?"
                     size="sm"
+                    value={this.state.location}
+                    name="location"
+                    onChange={this.handleInputChange}
                   />
                 </Flex>
                 <PseudoBox
                   rounded="50px"
                   bg="none"
                   px={16}
-                  py={3}
+                  py={4}
                   m="0"
                   as="button"
                   _hover={{ bg: "#ebebeb" }}
@@ -202,7 +227,7 @@ class Header extends Component {
                 <PseudoBox
                   rounded="50px"
                   px={16}
-                  py={3}
+                  py={4}
                   bg="none"
                   m="0"
                   as="button"
@@ -229,10 +254,12 @@ class Header extends Component {
                     ></DatePicker>
                   </Stack>
                 </PseudoBox>
-                <Button
+                <PseudoBox
+                  d="flex"
                   rounded="50px"
+                  alignItems="center"
                   px={8}
-                  py={8}
+                  py={4}
                   m="0"
                   bg="none"
                   _hover={{ bg: "#ebebeb" }}
@@ -241,16 +268,51 @@ class Header extends Component {
                     <Box>
                       <Text fontWeight={600}>Guests</Text>
                     </Box>
-                    <Box>
-                      <Text color="#adb1c6" fontWeight="200">
-                        Add Guests
-                      </Text>
-                    </Box>
+
+                    <Popover>
+                      <PopoverTrigger>
+                        <Text
+                          fontFamily="montserrat"
+                          color="#adb1c6"
+                          fontWeight={600}
+                        >
+                          {this.state.guests ? this.state.guests : "Add Guests"}
+                        </Text>
+                      </PopoverTrigger>
+                      <PopoverContent zIndex={4}>
+                        <PopoverArrow />
+                        <PopoverCloseButton />
+                        <PopoverHeader>No of Occupants</PopoverHeader>
+                        <PopoverBody>
+                          <NumberInput
+                            size="sm"
+                            min={0}
+                            defaultValue={this.state.guests}
+                            onChange={(e) => this.setState({ guests: e })}
+                          >
+                            <NumberInputField />
+                            <NumberInputStepper>
+                              <NumberIncrementStepper />
+                              <NumberDecrementStepper />
+                            </NumberInputStepper>
+                          </NumberInput>
+                        </PopoverBody>
+                      </PopoverContent>
+                    </Popover>
                   </Stack>
-                  <Box borderRadius={50} p={3} bg="#f3575e">
-                    <Icon name="search-2" color="white" size="22px" />
-                  </Box>
-                </Button>
+                  {/* <Box borderRadius={50} p={2} bg="#f3575e"> */}
+                  <Link to={`/city/${this.state.location}`}>
+                    <IconButton
+                      icon="search-2"
+                      // variantColor="#f3575e.200"
+                      bg="#f3575e"
+                      p={3}
+                      rounded="50px"
+                      color="white"
+                    />
+                  </Link>
+                  {/* </Box> */}
+                </PseudoBox>
               </Flex>
             </Collapse>
           </Flex>

@@ -3,23 +3,29 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Footer from "./Components/Footer";
 import Header from "./Components/Header";
-import ExploreNearby2 from "./Components/HomePage/ExploreNearby2";
-import Hero from "./Components/HomePage/Hero";
-import LisitngsPage from "./Components/ListingsFromSearch/LisitngsPage";
+import ListingsPage from "./Components/ListingsFromSearch/ListingsPage";
 import MainListingShowCase from "./Components/MainListingShowCase/MainListingShowCase";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
+import HomePage from "./Components/HomePage/HomePage";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider>
-      <CSSReset />
-      <Header />
-      {/* <LisitngsPage /> */}
-      {/* <Hero />
-      <ExploreNearby2 /> */}
-      <MainListingShowCase />
-      <Footer />
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider>
+        <CSSReset />
+
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route path="/city/:cityName" component={ListingsPage}></Route>
+          {/* <MainListingShowCase /> */}
+        </Switch>
+        <Footer />
+      </ThemeProvider>
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );
