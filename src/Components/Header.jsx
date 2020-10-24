@@ -168,7 +168,7 @@ class Header extends Component {
               />
               <MenuList>
                 <MenuGroup title="Profile">
-                  <MenuItem>My Account</MenuItem>
+                  <MenuItem>Login</MenuItem>
                   <MenuItem>Payments </MenuItem>
                 </MenuGroup>
                 <MenuDivider />
