@@ -54,7 +54,7 @@ class ExploreNearby2 extends Component {
 
   render() {
     return (
-      <Flex px="80px" py={20} flexWrap="wrap" justify="space-between">
+      <Flex px="80px" py={20} flexWrap="wrap" justify="space-around">
         {this.state.cards.map((card) => (
           <Box
             maxW="23rem"
