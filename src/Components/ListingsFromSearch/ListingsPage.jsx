@@ -10,13 +10,25 @@ class LisitngsPage extends Component {
 
     this.state = {
       listings: [],
+      location: "",
     };
   }
 
   async componentDidMount() {
-    let listings = await getListings(this.props.match.params.cityName);
+    await this.setState({ location: this.props.match.params.cityName });
+    let listings = await getListings(this.state.location);
     this.setState({ listings });
     console.log(listings);
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (prevProps.location.key !== this.props.location.key) {
+      await this.setState({
+        location: this.props.match.params.cityName,
+      });
+      let listings = await getListings(this.state.location);
+      this.setState({ listings });
+    }
   }
 
   render() {
@@ -40,9 +52,13 @@ class LisitngsPage extends Component {
           </Button>
         </ButtonGroup>
         {this.state.listings.length ? (
-          this.state.listings.map((item) => (
-            <ListingCard key={item.id} {...item} />
-          ))
+          this.state.listings == "we are not yet operational in this city" ? (
+            <Box my={4}>Oh Snap ! We are not yet operational in this city</Box>
+          ) : (
+            this.state.listings.map((item) => (
+              <ListingCard key={item.id} {...item} />
+            ))
+          )
         ) : (
           <Box my={4}>
             <Spinner size="xl" />

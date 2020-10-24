@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
+import { v4 as uuid } from "uuid";
 
 import {
   Box,
@@ -31,7 +32,6 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverBody,
-  PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
 } from "@chakra-ui/core";
@@ -74,12 +74,20 @@ class Header extends Component {
       endDate: date,
     });
   };
+
   render() {
     const ExampleCustomInput = ({ value, onClick }) => (
       <Button onClick={onClick} color="#adb1c6" bg="none" variant="link">
         {value}
       </Button>
     );
+    const linkTarget = {
+      pathname: `/city/${this.state.location}`,
+      // key: uuid(),
+      // state: {
+      //   applied: true,
+      // },
+    };
     return (
       <Box
         px="80px"
@@ -91,9 +99,17 @@ class Header extends Component {
         boxShadow="0px 2px 4px rgba(0, 0, 0, 0.18)"
       >
         <Flex justify="space-between" py={4} flexWrap="wrap">
-          <Flex alignItems="flex-start" pt={2}>
-            <Image h="32px" w="102px" src={Logo} alt="Logo" cursor="pointer" />
-          </Flex>
+          <Link to="/">
+            <Flex alignItems="flex-start" pt={2}>
+              <Image
+                h="32px"
+                w="102px"
+                src={Logo}
+                alt="Logo"
+                cursor="pointer"
+              />
+            </Flex>
+          </Link>
           <Flex flexDirection="column" w={200}>
             <PseudoBox
               as="button"
@@ -208,11 +224,7 @@ class Header extends Component {
                     <Box>
                       <Text fontWeight={600}>Check In</Text>
                     </Box>
-                    {/* <Box>
-                      <Text color="#adb1c6" fontWeight="200">
-                        Add Dates
-                      </Text>
-                    </Box> */}
+
                     <DatePicker
                       selected={this.state.startDate}
                       selectsStart
@@ -237,11 +249,6 @@ class Header extends Component {
                     <Box>
                       <Text fontWeight={600}>Check Out</Text>
                     </Box>
-                    {/* <Box>
-                      <Text color="#adb1c6" fontWeight="200">
-                        Add Dates
-                      </Text>
-                    </Box> */}
                     <DatePicker
                       selected={this.state.endDate}
                       selectsEnd
@@ -300,18 +307,16 @@ class Header extends Component {
                       </PopoverContent>
                     </Popover>
                   </Stack>
-                  {/* <Box borderRadius={50} p={2} bg="#f3575e"> */}
-                  <Link to={`/city/${this.state.location}`}>
+                  <Link to={linkTarget}>
                     <IconButton
                       icon="search-2"
-                      // variantColor="#f3575e.200"
                       bg="#f3575e"
                       p={3}
                       rounded="50px"
                       color="white"
+                      onClick={this.handleToggle}
                     />
                   </Link>
-                  {/* </Box> */}
                 </PseudoBox>
               </Flex>
             </Collapse>
