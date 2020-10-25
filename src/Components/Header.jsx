@@ -146,7 +146,6 @@ class Header extends Component {
               borderRadius={50}
               fontSize="14px"
               fontWeight="600"
-              onClick={this.props.toggle}
             >
               Become a host
             </Button>
@@ -171,7 +170,7 @@ class Header extends Component {
               />
               <MenuList>
                 <MenuGroup title="Profile">
-                  <MenuItem>Login</MenuItem>
+                  <MenuItem onClick={this.props.toggle}>Login</MenuItem>
                   <MenuItem>Payments </MenuItem>
                 </MenuGroup>
                 <MenuDivider />
@@ -185,143 +184,148 @@ class Header extends Component {
           <Box w="100%"></Box>
           <Flex w="100%" justify="center">
             <Collapse isOpen={this.state.show}>
-              <Flex
-                align="center"
-                border="1px"
-                borderRadius="50px"
-                borderColor="#dddddd"
-                fontSize="14px"
-                mt={4}
-              >
+              <form>
                 <Flex
-                  variantColor="teal"
-                  variant="ghost"
-                  rounded="50px"
-                  pl={5}
-                  my={0}
-                  flexDirection="column"
-                  justify="center"
-                  display="inline-flex"
-                  _hover={{ bg: "#ebebeb" }}
+                  align="center"
+                  border="1px"
+                  borderRadius="50px"
+                  borderColor="#dddddd"
+                  fontSize="14px"
+                  mt={4}
                 >
-                  <Text fontWeight={600}>Location</Text>
-                  <Input
-                    variant="unstyled"
-                    placeholder="Where are you going?"
-                    size="sm"
-                    value={this.state.location}
-                    name="location"
-                    onChange={this.handleInputChange}
-                  />
-                </Flex>
-                <PseudoBox
-                  rounded="50px"
-                  bg="none"
-                  px={16}
-                  py={4}
-                  m="0"
-                  as="button"
-                  _hover={{ bg: "#ebebeb" }}
-                >
-                  <Stack spacing={0} textAlign="left">
-                    <Box>
-                      <Text fontWeight={600}>Check In</Text>
-                    </Box>
-
-                    <DatePicker
-                      selected={this.state.startDate}
-                      selectsStart
-                      dateFormat="dd/MM/yyyy"
-                      onChange={this.setStartDate}
-                      startDate={this.state.startDate}
-                      endDate={this.state.endDate}
-                      customInput={<ExampleCustomInput />}
-                    ></DatePicker>
-                  </Stack>
-                </PseudoBox>
-                <PseudoBox
-                  rounded="50px"
-                  px={16}
-                  py={4}
-                  bg="none"
-                  m="0"
-                  as="button"
-                  _hover={{ bg: "#ebebeb" }}
-                >
-                  <Stack spacing={0} textAlign="left">
-                    <Box>
-                      <Text fontWeight={600}>Check Out</Text>
-                    </Box>
-                    <DatePicker
-                      selected={this.state.endDate}
-                      selectsEnd
-                      dateFormat="dd/MM/yyyy"
-                      onChange={this.setEndDate}
-                      startDate={this.state.startDate}
-                      endDate={this.state.endDate}
-                      minDate={this.state.startDate}
-                      customInput={<ExampleCustomInput />}
-                    ></DatePicker>
-                  </Stack>
-                </PseudoBox>
-                <PseudoBox
-                  d="flex"
-                  rounded="50px"
-                  alignItems="center"
-                  px={8}
-                  py={4}
-                  m="0"
-                  bg="none"
-                  _hover={{ bg: "#ebebeb" }}
-                >
-                  <Stack spacing={0} mr={10} textAlign="left">
-                    <Box>
-                      <Text fontWeight={600}>Guests</Text>
-                    </Box>
-
-                    <Popover>
-                      <PopoverTrigger>
-                        <Text
-                          fontFamily="montserrat"
-                          color="#adb1c6"
-                          fontWeight={600}
-                        >
-                          {this.state.guests ? this.state.guests : "Add Guests"}
-                        </Text>
-                      </PopoverTrigger>
-                      <PopoverContent zIndex={4}>
-                        <PopoverArrow />
-                        <PopoverCloseButton />
-                        <PopoverHeader>No of Occupants</PopoverHeader>
-                        <PopoverBody>
-                          <NumberInput
-                            size="sm"
-                            min={0}
-                            defaultValue={this.state.guests}
-                            onChange={(e) => this.setState({ guests: e })}
-                          >
-                            <NumberInputField />
-                            <NumberInputStepper>
-                              <NumberIncrementStepper />
-                              <NumberDecrementStepper />
-                            </NumberInputStepper>
-                          </NumberInput>
-                        </PopoverBody>
-                      </PopoverContent>
-                    </Popover>
-                  </Stack>
-                  <Link to={linkTarget}>
-                    <IconButton
-                      icon="search-2"
-                      bg="#f3575e"
-                      p={3}
-                      rounded="50px"
-                      color="white"
-                      onClick={this.handleToggle}
+                  <Flex
+                    variantColor="teal"
+                    variant="ghost"
+                    rounded="50px"
+                    pl={5}
+                    my={0}
+                    flexDirection="column"
+                    justify="center"
+                    display="inline-flex"
+                    _hover={{ bg: "#ebebeb" }}
+                  >
+                    <Text fontWeight={600}>Location</Text>
+                    <Input
+                      variant="unstyled"
+                      placeholder="Where are you going?"
+                      size="sm"
+                      value={this.state.location}
+                      name="location"
+                      onChange={this.handleInputChange}
+                      isRequired
                     />
-                  </Link>
-                </PseudoBox>
-              </Flex>
+                  </Flex>
+                  <PseudoBox
+                    rounded="50px"
+                    bg="none"
+                    px={16}
+                    py={4}
+                    m="0"
+                    as="button"
+                    _hover={{ bg: "#ebebeb" }}
+                  >
+                    <Stack spacing={0} textAlign="left">
+                      <Box>
+                        <Text fontWeight={600}>Check In</Text>
+                      </Box>
+
+                      <DatePicker
+                        selected={this.state.startDate}
+                        selectsStart
+                        dateFormat="dd/MM/yyyy"
+                        onChange={this.setStartDate}
+                        startDate={this.state.startDate}
+                        endDate={this.state.endDate}
+                        customInput={<ExampleCustomInput />}
+                      ></DatePicker>
+                    </Stack>
+                  </PseudoBox>
+                  <PseudoBox
+                    rounded="50px"
+                    px={16}
+                    py={4}
+                    bg="none"
+                    m="0"
+                    as="button"
+                    _hover={{ bg: "#ebebeb" }}
+                  >
+                    <Stack spacing={0} textAlign="left">
+                      <Box>
+                        <Text fontWeight={600}>Check Out</Text>
+                      </Box>
+                      <DatePicker
+                        selected={this.state.endDate}
+                        selectsEnd
+                        dateFormat="dd/MM/yyyy"
+                        onChange={this.setEndDate}
+                        startDate={this.state.startDate}
+                        endDate={this.state.endDate}
+                        minDate={this.state.startDate}
+                        customInput={<ExampleCustomInput />}
+                      ></DatePicker>
+                    </Stack>
+                  </PseudoBox>
+                  <PseudoBox
+                    d="flex"
+                    rounded="50px"
+                    alignItems="center"
+                    px={8}
+                    py={4}
+                    m="0"
+                    bg="none"
+                    _hover={{ bg: "#ebebeb" }}
+                  >
+                    <Stack spacing={0} mr={10} textAlign="left">
+                      <Box>
+                        <Text fontWeight={600}>Guests</Text>
+                      </Box>
+
+                      <Popover>
+                        <PopoverTrigger>
+                          <Text
+                            fontFamily="montserrat"
+                            color="#adb1c6"
+                            fontWeight={600}
+                          >
+                            {this.state.guests
+                              ? this.state.guests
+                              : "Add Guests"}
+                          </Text>
+                        </PopoverTrigger>
+                        <PopoverContent zIndex={4}>
+                          <PopoverArrow />
+                          <PopoverCloseButton />
+                          <PopoverHeader>No of Occupants</PopoverHeader>
+                          <PopoverBody>
+                            <NumberInput
+                              size="sm"
+                              min={0}
+                              defaultValue={this.state.guests}
+                              onChange={(e) => this.setState({ guests: e })}
+                            >
+                              <NumberInputField />
+                              <NumberInputStepper>
+                                <NumberIncrementStepper />
+                                <NumberDecrementStepper />
+                              </NumberInputStepper>
+                            </NumberInput>
+                          </PopoverBody>
+                        </PopoverContent>
+                      </Popover>
+                    </Stack>
+                    <Link to={linkTarget}>
+                      <IconButton
+                        icon="search-2"
+                        bg="#f3575e"
+                        p={3}
+                        rounded="50px"
+                        color="white"
+                        onClick={this.handleToggle}
+                      />
+                    </Link>
+                  </PseudoBox>
+                </Flex>
+              </form>
             </Collapse>
           </Flex>
         </Flex>
