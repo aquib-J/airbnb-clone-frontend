@@ -3,6 +3,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import { v4 as uuid } from "uuid";
+import { connect } from "react-redux";
+import { toggleModal } from "../Store/reducer";
 
 import {
   Box,
@@ -144,6 +146,7 @@ class Header extends Component {
               borderRadius={50}
               fontSize="14px"
               fontWeight="600"
+              onClick={this.props.toggle}
             >
               Become a host
             </Button>
@@ -327,4 +330,12 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  list: state,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  toggle: () => dispatch(toggleModal()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

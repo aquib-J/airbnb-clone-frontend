@@ -7,27 +7,28 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
 } from "@chakra-ui/core";
+import { connect } from "react-redux";
+import { toggleModal } from "../Store/reducer";
 
-export class loginModal extends Component {
+class loginModal extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isOpen: false,
-    };
+    this.state = {};
   }
-
-  initialRef = React.useRef();
-  finalRef = React.useRef();
 
   render() {
     return (
       <>
         <Modal
-          initialFocusRef={this.initialRef}
-          isOpen={isOpen}
-          onClose={onClose}
+          isOpen={this.props.isOpen}
+          onClose={this.props.toggle}
+          isCentered
         >
           <ModalOverlay />
           <ModalContent>
@@ -36,7 +37,7 @@ export class loginModal extends Component {
             <ModalBody pb={6}>
               <FormControl>
                 <FormLabel>First name</FormLabel>
-                <Input ref={this.initialRef} placeholder="First name" />
+                <Input placeholder="First name" />
               </FormControl>
 
               <FormControl mt={4}>
@@ -49,7 +50,7 @@ export class loginModal extends Component {
               <Button variantColor="blue" mr={3}>
                 Save
               </Button>
-              <Button onClick={onClose}>Cancel</Button>
+              <Button>Cancel</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>
@@ -58,4 +59,12 @@ export class loginModal extends Component {
   }
 }
 
-export default loginModal;
+const mapStateToProps = (state) => ({
+  isOpen: state,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  toggle: () => dispatch(toggleModal()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(loginModal);

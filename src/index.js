@@ -8,22 +8,27 @@ import MainListingShowCase from "./Components/MainListingShowCase/MainListingSho
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 import HomePage from "./Components/HomePage/HomePage";
+import { Provider } from "react-redux";
+import store from "./Store/store";
+import LoginModal from "./Components/loginModal";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <ThemeProvider>
         <CSSReset />
-
-        <Header />
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path="/city/:cityName" component={ListingsPage}></Route>
-          {/* <MainListingShowCase /> */}
-        </Switch>
-        <Footer />
+        <Provider store={store}>
+          <Header />
+          <LoginModal />
+          <Switch>
+            <Route exact path="/">
+              <HomePage />
+            </Route>
+            <Route path="/city/:cityName" component={ListingsPage}></Route>
+            {/* <MainListingShowCase /> */}
+          </Switch>
+          <Footer />
+        </Provider>
       </ThemeProvider>
     </Router>
   </React.StrictMode>,
