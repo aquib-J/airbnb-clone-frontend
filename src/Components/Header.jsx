@@ -94,7 +94,13 @@ class Header extends Component {
   };
   render() {
     const ExampleCustomInput = ({ value, onClick }) => (
-      <Button onClick={onClick} color="#adb1c6" bg="none" variant="link">
+      <Button
+        onClick={onClick}
+        color="#adb1c6"
+        bg="none"
+        variant="link"
+        _focus={{ outline: "none", bg: "none" }}
+      >
         {value}
       </Button>
     );
@@ -220,6 +226,7 @@ class Header extends Component {
                       value={this.state.location}
                       name="location"
                       onChange={this.handleInputChange}
+                      _focus={{ outline: "none", bg: "none" }}
                       isRequired
                     />
                   </Flex>
@@ -242,6 +249,7 @@ class Header extends Component {
                         dateFormat="dd/MM/yyyy"
                         onChange={this.setStartDate}
                         startDate={this.state.startDate}
+                        minDate={this.state.startDate}
                         endDate={this.state.endDate}
                         customInput={<ExampleCustomInput />}
                       ></DatePicker>
@@ -286,7 +294,7 @@ class Header extends Component {
                         <Text fontWeight={600}>Guests</Text>
                       </Box>
 
-                      <Popover>
+                      <Popover _focus={{ outline: "none", bg: "none" }}>
                         <PopoverTrigger>
                           <Text
                             fontFamily="montserrat"
@@ -298,7 +306,10 @@ class Header extends Component {
                               : "Add Guests"}
                           </Text>
                         </PopoverTrigger>
-                        <PopoverContent zIndex={4}>
+                        <PopoverContent
+                          zIndex={4}
+                          _focus={{ outline: "none", bg: "none" }}
+                        >
                           <PopoverArrow />
                           <PopoverCloseButton />
                           <PopoverHeader>No of Occupants</PopoverHeader>
