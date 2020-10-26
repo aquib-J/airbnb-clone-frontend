@@ -10,6 +10,8 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Divider,
+  InputGroup,
+  InputLeftAddon,
 } from "@chakra-ui/core";
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
@@ -59,11 +61,12 @@ export class BookingCard extends Component {
           this.props.bookings[0].checkoutDate
         )
       : [];
-    const numberOfDays = Math.ceil(
-      Math.abs(this.state.startDate - this.state.endDate) /
-        (1000 * 60 * 60 * 24)
-    );
-    const rent = this.props.price * (numberOfDays ? numberOfDays : 1);
+    const numberOfDays =
+      Math.ceil(
+        Math.abs(this.state.startDate - this.state.endDate) /
+          (1000 * 60 * 60 * 24)
+      ) + 1;
+    const rent = this.props.price * numberOfDays;
     const misc = (this.props.price * this.props.misc) / 100;
     const taxes = (this.props.price * (this.props.misc + 1)) / 100;
     const total = rent + misc + taxes;
@@ -135,12 +138,15 @@ export class BookingCard extends Component {
           </Stack>
           <Box w="100%"></Box>
           <Box borderTop="1px" p={2} borderColor="#b0b0b0" w="100%">
-            Guests
             <NumberInput
               defaultValue={this.props.guests ? this.props.guests : 0}
               max={2}
+              min={0}
             >
-              <NumberInputField variant="filled" />
+              <InputGroup size="md">
+                <InputLeftAddon children="Guests" />
+                <NumberInputField variant="filled" bg="none" />
+              </InputGroup>
               <NumberInputStepper>
                 <NumberIncrementStepper />
                 <NumberDecrementStepper />
@@ -161,7 +167,7 @@ export class BookingCard extends Component {
         <Stack mt={4}>
           <Flex justify="space-between">
             <Box>
-              &#x20B9;{this.props.price}x{numberOfDays ? numberOfDays : 1}
+              &#x20B9;{this.props.price}x{numberOfDays}
             </Box>
             <Box>&#x20B9;{rent}</Box>
           </Flex>

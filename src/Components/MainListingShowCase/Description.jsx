@@ -10,7 +10,10 @@ export class Description extends Component {
     return (
       <Box w="60%" fontFamily="montserrat">
         <Box mb={5}>
-          <Heading fontSize="24px">{this.props.desc}</Heading>
+          <Heading fontSize="24px">
+            {this.props.features.typeofListing} hosted by{" "}
+            {this.props.host[0].firstName} {this.props.host[0].lastName}
+          </Heading>
           <Text as="i" fontSize="12px" fontWeight={500}>
             {Object.keys(features).reduce((acc, feature) => {
               if (Number.isFinite(features[feature])) {

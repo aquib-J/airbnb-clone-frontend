@@ -29,6 +29,7 @@ class MainListingShowCase extends Component {
   }
 
   render() {
+    console.log(this.props.listing);
     const {
       listing,
       bookings,
@@ -61,6 +62,7 @@ class MainListingShowCase extends Component {
         <Flex my={10}>
           <Description
             desc={listing.listingDescription}
+            host={host}
             features={listing.features}
           />
           <BookingCard
