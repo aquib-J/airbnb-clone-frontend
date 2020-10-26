@@ -5,6 +5,7 @@ import {
   Flex,
   Heading,
   Skeleton,
+  Stack,
   Text,
 } from "@chakra-ui/core";
 import React, { Component } from "react";
@@ -39,7 +40,13 @@ class MainListingShowCase extends Component {
       review,
     } = this.props.listing;
     if (Object.keys(this.props.listing).length === 0) {
-      return <Skeleton colorStart="pink" colorEnd="orange" height="20px" />;
+      return (
+        <Stack spacing={2} px="80px" py={10}>
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+        </Stack>
+      );
     }
     return (
       <Box px="80px">
