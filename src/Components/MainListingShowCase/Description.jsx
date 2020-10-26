@@ -6,12 +6,20 @@ import { FaBan, FaBed, FaRegThumbsUp } from "react-icons/fa";
 
 export class Description extends Component {
   render() {
+    const features = this.props.features;
     return (
       <Box w="60%" fontFamily="montserrat">
         <Box mb={5}>
-          <Heading fontSize="24px">Room in Gurugram hosted by AirBNB</Heading>
+          <Heading fontSize="24px">{this.props.desc}</Heading>
           <Text as="i" fontSize="12px" fontWeight={500}>
-            2 guests · 1 bedroom · 1 bed · 1 private bathroom
+            {Object.keys(features).reduce((acc, feature) => {
+              if (Number.isFinite(features[feature])) {
+                if (feature == "maxOccupants")
+                  acc = acc + `${features[feature]} guests · `;
+                else acc = acc + `${features[feature]} ${feature} · `;
+              }
+              return acc;
+            }, "")}
           </Text>
         </Box>
         <Divider />
@@ -83,8 +91,8 @@ export class Description extends Component {
             rounded="lg"
           >
             <Box as={FaBed} size="32px" />
-            <Box>Bedroom 1</Box>
-            <Box fontSize={14}>1 Double bed</Box>
+            <Box>Bedroom {features.bedrooms}</Box>
+            <Box fontSize={14}>{features.beds} Double bed</Box>
           </Stack>
         </Box>
       </Box>

@@ -1,18 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { combineReducers } from "redux";
+import toggleReducer from "./toggle";
+import getCurrentListingReducer from "./getCurrentListing";
 
-const slice = createSlice({
-  name: "toggleLoginModal",
-  initialState: false,
-  reducers: {
-    toggleModal: (isOpen, action) => {
-      if (isOpen) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-  },
+export default combineReducers({
+  toggle: toggleReducer,
+  getCurrentListing: getCurrentListingReducer,
 });
-
-export const { toggleModal } = slice.actions;
-export default slice.reducer;

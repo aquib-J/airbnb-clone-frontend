@@ -25,7 +25,7 @@ ReactDOM.render(
               <HomePage />
             </Route>
             <Route path="/city/:cityName" component={ListingsPage}></Route>
-            {/* <MainListingShowCase /> */}
+            <Route path="/listing/:id" component={MainListingShowCase}></Route>
           </Switch>
           <Footer />
         </Provider>

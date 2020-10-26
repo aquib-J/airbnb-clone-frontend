@@ -20,7 +20,7 @@ import {
   InputRightElement,
 } from "@chakra-ui/core";
 import { connect } from "react-redux";
-import { toggleModal } from "../Store/reducer";
+import { toggleModal } from "../Store/toggle";
 
 class loginModal extends Component {
   constructor(props) {
@@ -39,6 +39,7 @@ class loginModal extends Component {
       show: !this.state.show,
     });
   };
+
   render() {
     return (
       <>
@@ -149,7 +150,7 @@ class loginModal extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isOpen: state,
+  isOpen: state.toggle.isOpen,
 });
 
 const mapDispatchToProps = (dispatch) => ({

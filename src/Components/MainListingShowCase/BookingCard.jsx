@@ -35,19 +35,39 @@ export class BookingCard extends Component {
       endDate: date,
     });
   };
+
+  createDateArray = (start, end) => {
+    console.log(start, end);
+    for (
+      var arr = [], dt = new Date(start);
+      dt <= new Date(end);
+      dt.setDate(dt.getDate() + 1)
+    ) {
+      arr.push(new Date(dt));
+    }
+    return arr;
+  };
+
   render() {
     const ExampleCustomInput = ({ value, onClick }) => (
       <Button onClick={onClick} color="#b0b0b0" bg="none" variant="link">
         {value}
       </Button>
     );
+    const excludedDates = this.createDateArray(
+      this.props.bookings[0].checkinDate,
+      this.props.bookings[0].checkoutDate
+    );
+    const pop = {
+      zIndex: 2,
+    };
     return (
       <Box
         w="35%"
         ml="auto"
         borderWidth="1px"
         rounded="lg"
-        overflow="hidden"
+        // overflow="hidden"
         position="sticky"
         top="110px"
         boxShadow="rgba(0, 0, 0, 0.12) 0px 6px 16px"
@@ -58,7 +78,7 @@ export class BookingCard extends Component {
           <Box d="flex" justifyContent="space-between" alignItems="baseline">
             <Box d="flex" alignItems="baseline">
               <Heading fontWeight="600" fontFamily="montserrat">
-                &#x20B9; 1200
+                &#x20B9; {this.props.price}
               </Heading>
               <Box as="span" color="gray.600" fontSize="sm">
                 / night
@@ -71,7 +91,7 @@ export class BookingCard extends Component {
                 display="inline"
                 color="pink.300"
               />
-              5.0
+              {this.props.rating}
             </Box>
           </Box>
         </Box>
@@ -87,10 +107,12 @@ export class BookingCard extends Component {
             <DatePicker
               selected={this.state.startDate}
               selectsStart
-              dateFormat="dd/MM/yyyy"
               onChange={this.setStartDate}
+              excludeDates={excludedDates}
               startDate={this.state.startDate}
               endDate={this.state.endDate}
+              minDate={new Date()}
+              className={pop}
               customInput={<ExampleCustomInput />}
             ></DatePicker>
           </Stack>
@@ -99,8 +121,8 @@ export class BookingCard extends Component {
             <DatePicker
               selected={this.state.endDate}
               selectsEnd
-              dateFormat="dd/MM/yyyy"
               onChange={this.setEndDate}
+              excludeDates={excludedDates}
               startDate={this.state.startDate}
               endDate={this.state.endDate}
               minDate={this.state.startDate}

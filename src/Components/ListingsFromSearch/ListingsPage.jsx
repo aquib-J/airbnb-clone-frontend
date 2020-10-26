@@ -2,7 +2,9 @@ import { Box, Button, ButtonGroup, Heading, Spinner } from "@chakra-ui/core";
 import React, { Component } from "react";
 import { getListings } from "../Api";
 import ListingCard from "./ListingCard";
+import { connect } from "react-redux";
 import Axios from "axios";
+import { Link } from "react-router-dom";
 
 class LisitngsPage extends Component {
   constructor(props) {
@@ -56,7 +58,9 @@ class LisitngsPage extends Component {
             <Box my={4}>Oh Snap ! We are not yet operational in this city</Box>
           ) : (
             this.state.listings.map((item) => (
-              <ListingCard key={item.id} {...item} />
+              <Link to={`/listing/${item.id}`}>
+                <ListingCard key={item.id} {...item} />
+              </Link>
             ))
           )
         ) : (
@@ -69,4 +73,12 @@ class LisitngsPage extends Component {
   }
 }
 
-export default LisitngsPage;
+const mapStateToProps = (state) => ({
+  list: state,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getData: (id) => dispatch({ type: "getCurrentListing", payload: id }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LisitngsPage);

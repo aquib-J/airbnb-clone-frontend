@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import { connect } from "react-redux";
-import { toggleModal } from "../Store/reducer";
+import { toggleModal } from "../Store/toggle";
 
 import {
   Box,
