@@ -169,21 +169,21 @@ export class BookingCard extends Component {
             <Box>
               &#x20B9;{this.props.price}x{numberOfDays}
             </Box>
-            <Box>&#x20B9;{rent}</Box>
+            <Box>&#x20B9;{rent.toFixed(2)}</Box>
           </Flex>
           <Flex justify="space-between">
             <Box>Service Fee</Box>
-            <Box>&#x20B9;{misc}</Box>
+            <Box>&#x20B9;{misc.toFixed(2)}</Box>
           </Flex>
           <Flex justify="space-between">
             <Box>Taxes</Box>
-            <Box>&#x20B9;{taxes}</Box>
+            <Box>&#x20B9;{taxes.toFixed(2)}</Box>
           </Flex>
         </Stack>
         <Divider />
         <Flex justify="space-between" mt={4}>
           <Box fontWeight={600}>Total</Box>
-          <Box fontWeight={600}>&#x20B9;{total}</Box>
+          <Box fontWeight={600}>&#x20B9;{total.toFixed(2)}</Box>
         </Flex>
       </Box>
     );
