@@ -229,7 +229,6 @@ class Header extends Component {
                     px={16}
                     py={4}
                     m="0"
-                    as="button"
                     _hover={{ bg: "#ebebeb" }}
                   >
                     <Stack spacing={0} textAlign="left">
@@ -254,7 +253,6 @@ class Header extends Component {
                     py={4}
                     bg="none"
                     m="0"
-                    as="button"
                     _hover={{ bg: "#ebebeb" }}
                   >
                     <Stack spacing={0} textAlign="left">

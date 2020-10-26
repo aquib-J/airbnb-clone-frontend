@@ -17,10 +17,14 @@ class LisitngsPage extends Component {
   }
 
   async componentDidMount() {
-    await this.setState({ location: this.props.match.params.cityName });
-    let listings = await getListings(this.state.location);
-    this.setState({ listings });
-    console.log(listings);
+    try {
+      await this.setState({ location: this.props.match.params.cityName });
+      let listings = await getListings(this.state.location);
+      this.setState({ listings });
+      console.log(listings);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async componentDidUpdate(prevProps) {
