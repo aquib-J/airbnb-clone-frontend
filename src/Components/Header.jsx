@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Link } from "react-router-dom";
-import { v4 as uuid } from "uuid";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { toggleModal } from "../Store/toggle";
 
@@ -46,6 +45,7 @@ import {
   setGuests,
   setCity,
 } from "../Store/setDates";
+import { compose } from "redux";
 
 class Header extends Component {
   constructor(props) {
@@ -57,6 +57,7 @@ class Header extends Component {
       endDate: new Date(),
       location: "",
       guests: 0,
+      searchSubmitted: false,
     };
   }
 
@@ -86,15 +87,17 @@ class Header extends Component {
     this.props.endDate(date);
   };
 
+  handleSearchSubmit = (e) => {
+    e.preventDefault();
+    this.handleToggle();
+    this.props.history.push(`/city/${this.state.location}`);
+  };
   render() {
     const ExampleCustomInput = ({ value, onClick }) => (
       <Button onClick={onClick} color="#adb1c6" bg="none" variant="link">
         {value}
       </Button>
     );
-    const linkTarget = {
-      pathname: `/city/${this.state.location}`,
-    };
     return (
       <Box
         px="80px"
@@ -188,149 +191,151 @@ class Header extends Component {
           </Box>
           <Box w="100%"></Box>
           <Flex w="100%" justify="center">
-            <Collapse isOpen={this.state.show}>
-              <Flex
-                align="center"
-                border="1px"
-                borderRadius="50px"
-                borderColor="#dddddd"
-                fontSize="14px"
-                mt={4}
-              >
+            <form onSubmit={this.handleSearchSubmit}>
+              <Collapse isOpen={this.state.show}>
                 <Flex
-                  variantColor="teal"
-                  variant="ghost"
-                  rounded="50px"
-                  pl={5}
-                  my={0}
-                  flexDirection="column"
-                  justify="center"
-                  display="inline-flex"
-                  _hover={{ bg: "#ebebeb" }}
+                  align="center"
+                  border="1px"
+                  borderRadius="50px"
+                  borderColor="#dddddd"
+                  fontSize="14px"
+                  mt={4}
                 >
-                  <Text fontWeight={600}>Location</Text>
-                  <Input
-                    variant="unstyled"
-                    placeholder="Where are you going?"
-                    size="sm"
-                    value={this.state.location}
-                    name="location"
-                    onChange={this.handleInputChange}
-                    isRequired
-                  />
-                </Flex>
-                <PseudoBox
-                  rounded="50px"
-                  bg="none"
-                  px={16}
-                  py={4}
-                  m="0"
-                  as="button"
-                  _hover={{ bg: "#ebebeb" }}
-                >
-                  <Stack spacing={0} textAlign="left">
-                    <Box>
-                      <Text fontWeight={600}>Check In</Text>
-                    </Box>
+                  <Flex
+                    variantColor="teal"
+                    variant="ghost"
+                    rounded="50px"
+                    pl={5}
+                    my={0}
+                    flexDirection="column"
+                    justify="center"
+                    display="inline-flex"
+                    _hover={{ bg: "#ebebeb" }}
+                  >
+                    <Text fontWeight={600}>Location</Text>
+                    <Input
+                      variant="unstyled"
+                      placeholder="Where are you going?"
+                      size="sm"
+                      value={this.state.location}
+                      name="location"
+                      onChange={this.handleInputChange}
+                      isRequired
+                    />
+                  </Flex>
+                  <PseudoBox
+                    rounded="50px"
+                    bg="none"
+                    px={16}
+                    py={4}
+                    m="0"
+                    as="button"
+                    _hover={{ bg: "#ebebeb" }}
+                  >
+                    <Stack spacing={0} textAlign="left">
+                      <Box>
+                        <Text fontWeight={600}>Check In</Text>
+                      </Box>
 
-                    <DatePicker
-                      selected={this.state.startDate}
-                      selectsStart
-                      dateFormat="dd/MM/yyyy"
-                      onChange={this.setStartDate}
-                      startDate={this.state.startDate}
-                      endDate={this.state.endDate}
-                      customInput={<ExampleCustomInput />}
-                    ></DatePicker>
-                  </Stack>
-                </PseudoBox>
-                <PseudoBox
-                  rounded="50px"
-                  px={16}
-                  py={4}
-                  bg="none"
-                  m="0"
-                  as="button"
-                  _hover={{ bg: "#ebebeb" }}
-                >
-                  <Stack spacing={0} textAlign="left">
-                    <Box>
-                      <Text fontWeight={600}>Check Out</Text>
-                    </Box>
-                    <DatePicker
-                      selected={this.state.endDate}
-                      selectsEnd
-                      dateFormat="dd/MM/yyyy"
-                      onChange={this.setEndDate}
-                      startDate={this.state.startDate}
-                      endDate={this.state.endDate}
-                      minDate={this.state.startDate}
-                      customInput={<ExampleCustomInput />}
-                    ></DatePicker>
-                  </Stack>
-                </PseudoBox>
-                <PseudoBox
-                  d="flex"
-                  rounded="50px"
-                  alignItems="center"
-                  px={8}
-                  py={4}
-                  m="0"
-                  bg="none"
-                  _hover={{ bg: "#ebebeb" }}
-                >
-                  <Stack spacing={0} mr={10} textAlign="left">
-                    <Box>
-                      <Text fontWeight={600}>Guests</Text>
-                    </Box>
+                      <DatePicker
+                        selected={this.state.startDate}
+                        selectsStart
+                        dateFormat="dd/MM/yyyy"
+                        onChange={this.setStartDate}
+                        startDate={this.state.startDate}
+                        endDate={this.state.endDate}
+                        customInput={<ExampleCustomInput />}
+                      ></DatePicker>
+                    </Stack>
+                  </PseudoBox>
+                  <PseudoBox
+                    rounded="50px"
+                    px={16}
+                    py={4}
+                    bg="none"
+                    m="0"
+                    as="button"
+                    _hover={{ bg: "#ebebeb" }}
+                  >
+                    <Stack spacing={0} textAlign="left">
+                      <Box>
+                        <Text fontWeight={600}>Check Out</Text>
+                      </Box>
+                      <DatePicker
+                        selected={this.state.endDate}
+                        selectsEnd
+                        dateFormat="dd/MM/yyyy"
+                        onChange={this.setEndDate}
+                        startDate={this.state.startDate}
+                        endDate={this.state.endDate}
+                        minDate={this.state.startDate}
+                        customInput={<ExampleCustomInput />}
+                      ></DatePicker>
+                    </Stack>
+                  </PseudoBox>
+                  <PseudoBox
+                    d="flex"
+                    rounded="50px"
+                    alignItems="center"
+                    px={8}
+                    py={4}
+                    m="0"
+                    bg="none"
+                    _hover={{ bg: "#ebebeb" }}
+                  >
+                    <Stack spacing={0} mr={10} textAlign="left">
+                      <Box>
+                        <Text fontWeight={600}>Guests</Text>
+                      </Box>
 
-                    <Popover>
-                      <PopoverTrigger>
-                        <Text
-                          fontFamily="montserrat"
-                          color="#adb1c6"
-                          fontWeight={600}
-                        >
-                          {this.state.guests ? this.state.guests : "Add Guests"}
-                        </Text>
-                      </PopoverTrigger>
-                      <PopoverContent zIndex={4}>
-                        <PopoverArrow />
-                        <PopoverCloseButton />
-                        <PopoverHeader>No of Occupants</PopoverHeader>
-                        <PopoverBody>
-                          <NumberInput
-                            size="sm"
-                            min={0}
-                            defaultValue={this.state.guests}
-                            onChange={(e) => {
-                              this.setState({ guests: e });
-                              this.props.guests(e);
-                            }}
+                      <Popover>
+                        <PopoverTrigger>
+                          <Text
+                            fontFamily="montserrat"
+                            color="#adb1c6"
+                            fontWeight={600}
                           >
-                            <NumberInputField />
-                            <NumberInputStepper>
-                              <NumberIncrementStepper />
-                              <NumberDecrementStepper />
-                            </NumberInputStepper>
-                          </NumberInput>
-                        </PopoverBody>
-                      </PopoverContent>
-                    </Popover>
-                  </Stack>
-                  <Link to={linkTarget}>
+                            {this.state.guests
+                              ? this.state.guests
+                              : "Add Guests"}
+                          </Text>
+                        </PopoverTrigger>
+                        <PopoverContent zIndex={4}>
+                          <PopoverArrow />
+                          <PopoverCloseButton />
+                          <PopoverHeader>No of Occupants</PopoverHeader>
+                          <PopoverBody>
+                            <NumberInput
+                              size="sm"
+                              min={0}
+                              defaultValue={this.state.guests}
+                              onChange={(e) => {
+                                this.setState({ guests: e });
+                                this.props.guests(e);
+                              }}
+                            >
+                              <NumberInputField />
+                              <NumberInputStepper>
+                                <NumberIncrementStepper />
+                                <NumberDecrementStepper />
+                              </NumberInputStepper>
+                            </NumberInput>
+                          </PopoverBody>
+                        </PopoverContent>
+                      </Popover>
+                    </Stack>
                     <IconButton
                       icon="search-2"
                       bg="#f3575e"
                       p={3}
                       rounded="50px"
                       color="white"
-                      onClick={this.handleToggle}
+                      type="submit"
                     />
-                  </Link>
-                </PseudoBox>
-              </Flex>
-            </Collapse>
+                  </PseudoBox>
+                </Flex>
+              </Collapse>
+            </form>
           </Flex>
         </Flex>
       </Box>
@@ -350,4 +355,7 @@ const mapDispatchToProps = (dispatch) => ({
   city: (cityName) => dispatch(setCity(cityName)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(Header);
