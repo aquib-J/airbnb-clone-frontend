@@ -140,7 +140,7 @@ export class BookingCard extends Component {
           <Box borderTop="1px" p={2} borderColor="#b0b0b0" w="100%">
             <NumberInput
               defaultValue={this.props.guests ? this.props.guests : 0}
-              max={2}
+              max={this.props.maxGuests}
               min={0}
             >
               <InputGroup size="md">

@@ -72,6 +72,7 @@ class MainListingShowCase extends Component {
             bookings={bookings}
             startDate={this.props.startDate}
             endDate={this.props.endDate}
+            maxGuests={listing.features.maxOccupants}
             guests={this.props.guests}
           />
         </Flex>
