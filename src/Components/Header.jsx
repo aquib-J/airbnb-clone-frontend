@@ -96,10 +96,13 @@ class Header extends Component {
     const ExampleCustomInput = ({ value, onClick }) => (
       <Button
         onClick={onClick}
-        color="#adb1c6"
+        color="#b2becc"
         bg="none"
         variant="link"
         _focus={{ outline: "none", bg: "none" }}
+        fontWeight={400}
+        fontSize={14}
+        fontFamily="montserrat"
       >
         {value}
       </Button>
@@ -298,8 +301,10 @@ class Header extends Component {
                         <PopoverTrigger>
                           <Text
                             fontFamily="montserrat"
-                            color="#adb1c6"
-                            fontWeight={600}
+                            color="#b2becc"
+                            fontWeight={500}
+                            fontSize={14}
+                            cursor="pointer"
                           >
                             {this.state.guests
                               ? this.state.guests
