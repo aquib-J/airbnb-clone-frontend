@@ -37,7 +37,7 @@ class LisitngsPage extends Component {
     return (
       <Box px="80px" py={10}>
         <Heading fontFamily="Montserrat" mb={3} fontWeight={600}>
-          Stays Nearby
+          Stays Nearby {this.props.city}
         </Heading>
         <ButtonGroup spacing={4}>
           <Button variant="outline" rounded="50px">
@@ -74,7 +74,7 @@ class LisitngsPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  list: state,
+  city: state.setDates.city,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -29,14 +29,13 @@ class MainListingShowCase extends Component {
   }
 
   render() {
-    console.log(this.props.listing);
     const {
       listing,
       bookings,
       city,
       host,
       images,
-      revieiw,
+      review,
     } = this.props.listing;
     if (Object.keys(this.props.listing).length === 0) {
       return <Skeleton colorStart="pink" colorEnd="orange" height="20px" />;
@@ -66,18 +65,26 @@ class MainListingShowCase extends Component {
           />
           <BookingCard
             price={listing.pricePerDay}
+            misc={listing.miscCostPercentage}
             rating={listing.avgRating}
             bookings={bookings}
+            startDate={this.props.startDate}
+            endDate={this.props.endDate}
+            guests={this.props.guests}
           />
         </Flex>
         <Divider />
-        <Reviews />
+
+        <Reviews review={review} rating={listing.avgRating} />
       </Box>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
+  startDate: state.setDates.startDate,
+  endDate: state.setDates.endDate,
+  guests: state.setDates.guests,
   listing: state.getCurrentListing,
 });
 

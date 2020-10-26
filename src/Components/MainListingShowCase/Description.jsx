@@ -69,13 +69,7 @@ export class Description extends Component {
         </Box>
         <Divider />
         <Box py={4} fontSize="14px">
-          It's an indipendent hill facing 1 BHK apartment (with all modern
-          amenities) in a gated community on the foothills of mussoorie ,far
-          from the City in a non polluted area.about 17 Kms from mussoorie,in
-          the lap of nature.conveniently located at main Mussoorie Road to
-          provide unmatched connectivity from all the important landmarks and
-          places of everyday utility such as hospitals,schools,supermarts,
-          parks,recreational centers etc
+          {this.props.desc}
         </Box>
         <Divider />
         <Box my={4}>

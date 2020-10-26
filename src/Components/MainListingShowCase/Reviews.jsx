@@ -4,6 +4,7 @@ import { AiOutlineStar } from "react-icons/ai";
 
 class Reviews extends Component {
   render() {
+    const reviews = this.props.review;
     return (
       <Box mb={10}>
         <Flex fontSize={32} alignItems="center" my={4} fontWeight={600}>
@@ -13,128 +14,31 @@ class Reviews extends Component {
             display="inline"
             color="pink.300"
           />
-          5.0
+          {this.props.rating}
         </Flex>
         <SimpleGrid columns={2} spacing={10}>
-          <Box height="fit-content">
-            <Flex align="center">
-              <Avatar
-                size="md"
-                name="Prosper Otemuyiwa"
-                src="https://bit.ly/prosper-baba"
-              />
-              <Box ml={4}>
-                <Box fontWeight={600}>Tushar</Box>
-                <Box fontSize="12px">October 2020</Box>
+          {reviews.length ? (
+            reviews.map((review) => (
+              <Box key={review.id} height="fit-content">
+                <Flex align="center">
+                  <Avatar
+                    size="md"
+                    name="Prosper Otemuyiwa"
+                    src={review.reviewerInfo.pic}
+                  />
+                  <Box ml={4}>
+                    <Box fontWeight={600}>{review.reviewerInfo.firstName}</Box>
+                    <Box fontSize="12px">{review.createdAt}</Box>
+                  </Box>
+                </Flex>
+                <Box fontSize={14} mt={4}>
+                  {review.description}
+                </Box>
               </Box>
-            </Flex>
-            <Box fontSize={14} mt={4}>
-              Great property with an amazing host. Sameer will ensure that you
-              have everything sorted out before you even check in.
-            </Box>
-          </Box>
-          <Box height="fit-content">
-            <Flex align="center">
-              <Avatar
-                size="md"
-                name="Prosper Otemuyiwa"
-                src="https://bit.ly/kent-c-dodds"
-              />
-              <Box ml={4}>
-                <Box fontWeight={600}>Tushar</Box>
-                <Box fontSize="12px">October 2020</Box>
-              </Box>
-            </Flex>
-            <Box fontSize={14} mt={4}>
-              Really good hospitality. The apartment is just apt. and really
-              clean with a good view. Sameer is always available for help.
-            </Box>
-          </Box>
-          <Box height="fit-content">
-            <Flex align="center">
-              <Avatar
-                size="md"
-                name="Prosper Otemuyiwa"
-                src="https://bit.ly/ryan-florence"
-              />
-              <Box ml={4}>
-                <Box fontWeight={600}>Tushar</Box>
-                <Box fontSize="12px">October 2020</Box>
-              </Box>
-            </Flex>
-            <Box fontSize={14} mt={4}>
-              Really good hospitality. The apartment is just apt. and really
-              clean with a good view. Sameer is always available for help.
-            </Box>
-          </Box>
-          <Box height="fit-content">
-            <Flex align="center">
-              <Avatar
-                size="md"
-                name="Prosper Otemuyiwa"
-                src="https://bit.ly/code-beast"
-              />
-              <Box ml={4}>
-                <Box fontWeight={600}>Tushar</Box>
-                <Box fontSize="12px">October 2020</Box>
-              </Box>
-            </Flex>
-            <Box fontSize={14} mt={4}>
-              Really good hospitality. The apartment is just apt. and really
-              clean with a good view. Sameer is always available for help.
-            </Box>
-          </Box>
-          <Box height="fit-content">
-            <Flex align="center">
-              <Avatar
-                size="md"
-                name="Prosper Otemuyiwa"
-                src="https://bit.ly/broken-link"
-              />
-              <Box ml={4}>
-                <Box fontWeight={600}>Tushar</Box>
-                <Box fontSize="12px">October 2020</Box>
-              </Box>
-            </Flex>
-            <Box fontSize={14} mt={4}>
-              Really good hospitality. The apartment is just apt. and really
-              clean with a good view. Sameer is always available for help.
-            </Box>
-          </Box>
-          <Box height="fit-content">
-            <Flex align="center">
-              <Avatar
-                size="md"
-                name="Prosper Otemuyiwa"
-                src="https://bit.ly/dan-abramov"
-              />
-              <Box ml={4}>
-                <Box fontWeight={600}>Tushar</Box>
-                <Box fontSize="12px">October 2020</Box>
-              </Box>
-            </Flex>
-            <Box fontSize={14} mt={4}>
-              Really good hospitality. The apartment is just apt. and really
-              clean with a good view. Sameer is always available for help.
-            </Box>
-          </Box>
-          <Box height="fit-content">
-            <Flex align="center">
-              <Avatar
-                size="md"
-                name="Prosper Otemuyiwa"
-                src="https://bit.ly/tioluwani-kolawole"
-              />
-              <Box ml={4}>
-                <Box fontWeight={600}>Tushar</Box>
-                <Box fontSize="12px">October 2020</Box>
-              </Box>
-            </Flex>
-            <Box fontSize={14} mt={4}>
-              Really good hospitality. The apartment is just apt. and really
-              clean with a good view. Sameer is always available for help.
-            </Box>
-          </Box>
+            ))
+          ) : (
+            <Box>No Reviews Yet</Box>
+          )}
         </SimpleGrid>
       </Box>
     );

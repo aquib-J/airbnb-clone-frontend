@@ -20,8 +20,8 @@ export class BookingCard extends Component {
     super(props);
 
     this.state = {
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: this.props.startDate ? this.props.startDate : new Date(),
+      endDate: this.props.endDate ? this.props.endDate : new Date(),
     };
   }
 
@@ -37,7 +37,6 @@ export class BookingCard extends Component {
   };
 
   createDateArray = (start, end) => {
-    console.log(start, end);
     for (
       var arr = [], dt = new Date(start);
       dt <= new Date(end);
@@ -54,20 +53,26 @@ export class BookingCard extends Component {
         {value}
       </Button>
     );
-    const excludedDates = this.createDateArray(
-      this.props.bookings[0].checkinDate,
-      this.props.bookings[0].checkoutDate
+    const excludedDates = this.props.bookings.length
+      ? this.createDateArray(
+          this.props.bookings[0].checkinDate,
+          this.props.bookings[0].checkoutDate
+        )
+      : [];
+    const numberOfDays = Math.ceil(
+      Math.abs(this.state.startDate - this.state.endDate) /
+        (1000 * 60 * 60 * 24)
     );
-    const pop = {
-      zIndex: 2,
-    };
+    const rent = this.props.price * (numberOfDays ? numberOfDays : 1);
+    const misc = (this.props.price * this.props.misc) / 100;
+    const taxes = (this.props.price * (this.props.misc + 1)) / 100;
+    const total = rent + misc + taxes;
     return (
       <Box
         w="35%"
         ml="auto"
         borderWidth="1px"
         rounded="lg"
-        // overflow="hidden"
         position="sticky"
         top="110px"
         boxShadow="rgba(0, 0, 0, 0.12) 0px 6px 16px"
@@ -112,7 +117,6 @@ export class BookingCard extends Component {
               startDate={this.state.startDate}
               endDate={this.state.endDate}
               minDate={new Date()}
-              className={pop}
               customInput={<ExampleCustomInput />}
             ></DatePicker>
           </Stack>
@@ -132,7 +136,10 @@ export class BookingCard extends Component {
           <Box w="100%"></Box>
           <Box borderTop="1px" p={2} borderColor="#b0b0b0" w="100%">
             Guests
-            <NumberInput defaultValue={2} min={10} max={20}>
+            <NumberInput
+              defaultValue={this.props.guests ? this.props.guests : 0}
+              max={2}
+            >
               <NumberInputField variant="filled" />
               <NumberInputStepper>
                 <NumberIncrementStepper />
@@ -153,22 +160,24 @@ export class BookingCard extends Component {
         </Button>
         <Stack mt={4}>
           <Flex justify="space-between">
-            <Box>&#x20B9;1200x2nights</Box>
-            <Box>2400</Box>
+            <Box>
+              &#x20B9;{this.props.price}x{numberOfDays ? numberOfDays : 1}
+            </Box>
+            <Box>&#x20B9;{rent}</Box>
           </Flex>
           <Flex justify="space-between">
             <Box>Service Fee</Box>
-            <Box>&#x20B9;339</Box>
+            <Box>&#x20B9;{misc}</Box>
           </Flex>
           <Flex justify="space-between">
             <Box>Taxes</Box>
-            <Box>288</Box>
+            <Box>&#x20B9;{taxes}</Box>
           </Flex>
         </Stack>
         <Divider />
         <Flex justify="space-between" mt={4}>
           <Box fontWeight={600}>Total</Box>
-          <Box fontWeight={600}>&#x20B9;3027</Box>
+          <Box fontWeight={600}>&#x20B9;{total}</Box>
         </Flex>
       </Box>
     );
