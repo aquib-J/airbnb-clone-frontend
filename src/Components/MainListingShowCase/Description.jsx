@@ -1,4 +1,12 @@
-import { Box, Divider, Flex, Heading, Stack, Text } from "@chakra-ui/core";
+import {
+  Avatar,
+  Box,
+  Divider,
+  Flex,
+  Heading,
+  Stack,
+  Text,
+} from "@chakra-ui/core";
 import React, { Component } from "react";
 import { AiOutlineSolution } from "react-icons/ai";
 import { BsHouse } from "react-icons/bs";
@@ -10,20 +18,29 @@ export class Description extends Component {
     return (
       <Box w="60%" fontFamily="montserrat">
         <Box mb={5}>
-          <Heading fontSize="24px">
-            {this.props.features.typeofListing} hosted by{" "}
-            {this.props.host[0].firstName} {this.props.host[0].lastName}
-          </Heading>
-          <Text as="i" fontSize="12px" fontWeight={500}>
-            {Object.keys(features).reduce((acc, feature) => {
-              if (Number.isFinite(features[feature])) {
-                if (feature == "maxOccupants")
-                  acc = acc + `${features[feature]} guests · `;
-                else acc = acc + `${features[feature]} ${feature} · `;
-              }
-              return acc;
-            }, "")}
-          </Text>
+          <Flex justify="space-between" flexWrap="wrap">
+            <Box>
+              <Heading fontSize="24px" fontWeight={500}>
+                {this.props.features.typeofListing} hosted by{" "}
+                {this.props.host[0].firstName} {this.props.host[0].lastName}
+              </Heading>
+              <Text as="i" fontSize="14px" fontWeight={500}>
+                {Object.keys(features).reduce((acc, feature) => {
+                  if (Number.isFinite(features[feature])) {
+                    if (feature == "maxOccupants")
+                      acc = acc + `${features[feature]} guests · `;
+                    else acc = acc + `${features[feature]} ${feature} · `;
+                  }
+                  return acc;
+                }, "")}
+              </Text>
+            </Box>
+            <Avatar
+              size="lg"
+              name="Prosper Otemuyiwa"
+              src={this.props.host[0].profilePictureUrl}
+            />
+          </Flex>
         </Box>
         <Divider />
         <Box my={5}>
