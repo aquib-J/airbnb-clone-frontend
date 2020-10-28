@@ -11,6 +11,7 @@ import HomePage from "./Components/HomePage/HomePage";
 import { Provider } from "react-redux";
 import store from "./Store/store";
 import LoginModal from "./Components/loginModal";
+import ProfilePage from "./Components/ProfilePage/ProfilePage";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,13 +21,14 @@ ReactDOM.render(
         <Provider store={store}>
           <Header />
           <LoginModal />
-          <Switch>
+          <ProfilePage />
+          {/* <Switch>
             <Route exact path="/">
               <HomePage />
             </Route>
             <Route path="/city/:cityName" component={ListingsPage}></Route>
             <Route path="/listing/:id" component={MainListingShowCase}></Route>
-          </Switch>
+          </Switch> */}
           <Footer />
         </Provider>
       </ThemeProvider>
