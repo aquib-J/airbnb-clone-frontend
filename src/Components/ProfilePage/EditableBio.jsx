@@ -121,7 +121,7 @@ class EditableBio extends Component {
     return (
       <Box w="60%">
         <Heading>Personal Info</Heading>
-        <Accordion allowToggle py={5}>
+        <Accordion allowToggle={true} py={5}>
           <AccordionItem borderTop="none" defaultIsOpen={false}>
             {({ isExpanded }) => (
               <>
