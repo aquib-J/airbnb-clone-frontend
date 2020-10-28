@@ -34,6 +34,8 @@ class EditableBio extends Component {
       isLoadingForName: false,
       isLoadingForEmail: false,
       isLoadingForPass: false,
+      isLoadingForDOB: false,
+      isLoadingForIntro: false,
     };
   }
 
@@ -49,12 +51,20 @@ class EditableBio extends Component {
     });
   };
 
+  setDOB = (date) => {
+    this.setState({
+      dob: date,
+    });
+  };
+
   handleUpdateProfile = async (e, params) => {
     e.preventDefault();
     this.setState({
       isLoadingForName: true,
       isLoadingForEmail: true,
       isLoadingForPass: true,
+      isLoadingForDOB: true,
+      isLoadingForIntro: true,
     });
     let res = await updateUser(1, params);
     this.setState({
@@ -67,6 +77,8 @@ class EditableBio extends Component {
       isLoadingForName: false,
       isLoadingForEmail: false,
       isLoadingForPass: false,
+      isLoadingForDOB: false,
+      isLoadingForIntro: false,
     });
   };
   componentDidUpdate(prevProps) {
@@ -104,7 +116,7 @@ class EditableBio extends Component {
     let day = dateObj.getUTCDate();
     let year = dateObj.getUTCFullYear();
 
-    let newdate = year + "/" + month + "/" + day;
+    let newdate = month + "/" + day + "/" + year;
 
     return (
       <Box w="60%">
@@ -357,9 +369,18 @@ class EditableBio extends Component {
                           ? new Date()
                           : new Date(this.state.dob)
                       }
+                      onChange={this.setDOB}
                       customInput={<ExampleCustomInput />}
                     ></DatePicker>
-                    <Button variantColor="teal" ml={10}>
+                    <Button
+                      variantColor="teal"
+                      ml={10}
+                      isLoading={this.state.isLoadingForDOB}
+                      loadingText="Saving"
+                      onClick={(e) =>
+                        this.handleUpdateProfile(e, { dob: this.state.dob })
+                      }
+                    >
                       Save
                     </Button>
                   </Flex>
@@ -398,7 +419,13 @@ class EditableBio extends Component {
                   </AccordionHeader>
                 </Flex>
                 <AccordionPanel mb={4}>
-                  <form>
+                  <form
+                    onSubmit={(e) =>
+                      this.handleUpdateProfile(e, {
+                        introductionOfUser: this.state.intro,
+                      })
+                    }
+                  >
                     <Textarea
                       placeholder="Intro..."
                       id="intro"
@@ -406,7 +433,14 @@ class EditableBio extends Component {
                       onChange={this.handleInputChange}
                       mb={4}
                     />
-                    <Button variantColor="teal">Save</Button>
+                    <Button
+                      variantColor="teal"
+                      type="submit"
+                      isLoading={this.state.isLoadingForIntro}
+                      loadingText="Saving"
+                    >
+                      Save
+                    </Button>
                   </form>
                 </AccordionPanel>
               </>
