@@ -14,19 +14,34 @@ import React, { Component } from "react";
 import EditableBio from "./EditableBio";
 import BookingHistory from "./BookingHistory";
 import YourListings from "./YourListings";
+import { getUser } from "../Api";
 
 class ProfilePage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user: {},
+    };
+  }
+
+  async componentDidMount() {
+    let user = await getUser();
+    this.setState({ user });
+    console.log(user);
+  }
+
   render() {
     return (
       <Box px="120px" py={10}>
         <Text>Profile</Text>
         <Flex w="100%">
-          <EditableBio />
+          <EditableBio {...this.state.user} />
           <Avatar
             h={200}
             w={200}
             name="Segun Adebayo"
-            src="https://bit.ly/sage-adebayo"
+            src={this.state.user.profilePictureUrl}
             mx="auto"
           />
         </Flex>

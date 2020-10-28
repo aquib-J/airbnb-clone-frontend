@@ -10,3 +10,14 @@ export async function getListings(cityName) {
     console.log(error);
   }
 }
+
+export async function getUser(userID = 1) {
+  try {
+    let res = await Axios.get(
+      `https://airbnb-clone-backend-1.herokuapp.com/api/v1/users/${userID}`
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
