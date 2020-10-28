@@ -11,6 +11,8 @@ import {
   Heading,
   Input,
   FormControl,
+  Skeleton,
+  Stack,
 } from "@chakra-ui/core";
 import React, { Component } from "react";
 import EditableBio from "./EditableBio";
@@ -24,32 +26,46 @@ class ProfilePage extends Component {
 
     this.state = {
       user: {},
+      isLoading: true,
     };
   }
 
   async componentDidMount() {
     let user = await getUser();
-    this.setState({ user });
+    this.setState({ user, isLoading: false });
     console.log(user);
   }
 
   render() {
     return (
       <Box px="120px" py={10}>
-        <Text>Profile</Text>
+        <Text fontFamily="montserrat" as="i">
+          Hi {this.state.user.firstName},
+        </Text>
         <Flex w="100%">
-          <EditableBio {...this.state.user} />
+          {this.state.isLoading ? (
+            <Stack w="70%">
+              <Skeleton height="20px" my="10px" w="100%" />
+              <Skeleton height="20px" my="10px" w="100%" />
+              <Skeleton height="20px" my="10px" w="100%" />
+            </Stack>
+          ) : (
+            <EditableBio {...this.state.user} />
+          )}
+
           <Flex flexDirection="column" align="center" ml="auto">
-            <Avatar
-              h={200}
-              w={200}
-              name="Segun Adebayo"
-              src={this.state.user.profilePictureUrl}
-              mb={5}
-            />
-            {/* <FormControl>
+            <Skeleton isLoaded={!this.state.isLoading}>
+              <Avatar
+                h={200}
+                w={200}
+                name="Segun Adebayo"
+                src={this.state.user.profilePictureUrl}
+                mb={5}
+              />
+            </Skeleton>
+            <FormControl>
               <Input type="file" size="sm"></Input>
-            </FormControl> */}
+            </FormControl>
           </Flex>
         </Flex>
         <Accordion allowToggle py={5}>
