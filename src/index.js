@@ -21,14 +21,14 @@ ReactDOM.render(
         <Provider store={store}>
           <Header />
           <LoginModal />
-          <ProfilePage />
-          {/* <Switch>
+          <Switch>
             <Route exact path="/">
               <HomePage />
             </Route>
             <Route path="/city/:cityName" component={ListingsPage}></Route>
             <Route path="/listing/:id" component={MainListingShowCase}></Route>
-          </Switch> */}
+            <Route path="/profile" component={ProfilePage}></Route>
+          </Switch>
           <Footer />
         </Provider>
       </ThemeProvider>

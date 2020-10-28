@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/core";
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
+import { updateUser } from "../Api";
 
 class EditableBio extends Component {
   constructor(props) {
@@ -56,6 +57,20 @@ class EditableBio extends Component {
       });
     }
   }
+
+  handleUpdateProfile = async (e, params) => {
+    e.preventDefault();
+    console.log("here");
+    let res = await updateUser(params);
+    this.setState({
+      firstName: res.firstName,
+      lastName: res.lastName,
+      email: res.email,
+      dob: res.dob,
+      intro: res.introductionOfUser,
+      password: res.password,
+    });
+  };
 
   render() {
     console.log(this.props);
@@ -117,7 +132,14 @@ class EditableBio extends Component {
                   </AccordionHeader>
                 </Flex>
                 <AccordionPanel mb={4}>
-                  <form>
+                  <form
+                    onSubmit={() =>
+                      this.handleUpdateProfile({
+                        firstName: this.state.firstName,
+                        lastName: this.state.lastName,
+                      })
+                    }
+                  >
                     <Flex justify="space-between" mb={4}>
                       <FormControl>
                         <FormLabel htmlFor="email">First Name</FormLabel>

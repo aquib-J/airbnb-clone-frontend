@@ -9,6 +9,8 @@ import {
   AccordionPanel,
   Button,
   Heading,
+  Input,
+  FormControl,
 } from "@chakra-ui/core";
 import React, { Component } from "react";
 import EditableBio from "./EditableBio";
@@ -37,13 +39,18 @@ class ProfilePage extends Component {
         <Text>Profile</Text>
         <Flex w="100%">
           <EditableBio {...this.state.user} />
-          <Avatar
-            h={200}
-            w={200}
-            name="Segun Adebayo"
-            src={this.state.user.profilePictureUrl}
-            mx="auto"
-          />
+          <Flex flexDirection="column" align="center" ml="auto">
+            <Avatar
+              h={200}
+              w={200}
+              name="Segun Adebayo"
+              src={this.state.user.profilePictureUrl}
+              mb={5}
+            />
+            {/* <FormControl>
+              <Input type="file" size="sm"></Input>
+            </FormControl> */}
+          </Flex>
         </Flex>
         <Accordion allowToggle py={5}>
           <AccordionItem borderTop="none" defaultIsOpen={false}>
