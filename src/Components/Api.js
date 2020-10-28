@@ -22,9 +22,9 @@ export async function getUser(userID = 1) {
   }
 }
 
-export async function updateUser(userID = 1, params) {
+export async function updateUser(userID, params) {
   try {
-    console.log("HERE");
+    // console.log("HERE");
     let res = await Axios.put(
       `https://airbnb-clone-backend-1.herokuapp.com/api/v1/users/${userID}`,
       params

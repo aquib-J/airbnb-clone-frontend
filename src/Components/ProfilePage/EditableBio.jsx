@@ -31,6 +31,9 @@ class EditableBio extends Component {
       intro: this.props.introductionOfUser,
       password: this.props.password,
       show: false,
+      isLoadingForName: false,
+      isLoadingForEmail: false,
+      isLoadingForPass: false,
     };
   }
 
@@ -45,6 +48,27 @@ class EditableBio extends Component {
       show: !this.state.show,
     });
   };
+
+  handleUpdateProfile = async (e, params) => {
+    e.preventDefault();
+    this.setState({
+      isLoadingForName: true,
+      isLoadingForEmail: true,
+      isLoadingForPass: true,
+    });
+    let res = await updateUser(1, params);
+    this.setState({
+      firstName: res.firstName,
+      lastName: res.lastName,
+      email: res.email,
+      dob: res.dob,
+      intro: res.introductionOfUser,
+      password: res.password,
+      isLoadingForName: false,
+      isLoadingForEmail: false,
+      isLoadingForPass: false,
+    });
+  };
   componentDidUpdate(prevProps) {
     if (prevProps != this.props) {
       this.setState({
@@ -57,20 +81,6 @@ class EditableBio extends Component {
       });
     }
   }
-
-  handleUpdateProfile = async (e, params) => {
-    e.preventDefault();
-    console.log("here");
-    let res = await updateUser(params);
-    this.setState({
-      firstName: res.firstName,
-      lastName: res.lastName,
-      email: res.email,
-      dob: res.dob,
-      intro: res.introductionOfUser,
-      password: res.password,
-    });
-  };
 
   render() {
     console.log(this.props);
@@ -133,8 +143,8 @@ class EditableBio extends Component {
                 </Flex>
                 <AccordionPanel mb={4}>
                   <form
-                    onSubmit={() =>
-                      this.handleUpdateProfile({
+                    onSubmit={(e) =>
+                      this.handleUpdateProfile(e, {
                         firstName: this.state.firstName,
                         lastName: this.state.lastName,
                       })
@@ -160,7 +170,16 @@ class EditableBio extends Component {
                         />
                       </FormControl>
                     </Flex>
-                    <Button variantColor="teal">Save</Button>
+                    <FormControl>
+                      <Button
+                        variantColor="teal"
+                        type="submit"
+                        isLoading={this.state.isLoadingForName}
+                        loadingText="Saving"
+                      >
+                        Save
+                      </Button>
+                    </FormControl>
                   </form>
                 </AccordionPanel>
               </>
@@ -199,7 +218,13 @@ class EditableBio extends Component {
                   </AccordionHeader>
                 </Flex>
                 <AccordionPanel mb={4}>
-                  <form>
+                  <form
+                    onSubmit={(e) =>
+                      this.handleUpdateProfile(e, {
+                        email: this.state.email,
+                      })
+                    }
+                  >
                     <Flex justify="space-between" mb={4}>
                       <FormControl>
                         <FormLabel htmlFor="email">Email</FormLabel>
@@ -211,7 +236,14 @@ class EditableBio extends Component {
                         />
                       </FormControl>
                     </Flex>
-                    <Button variantColor="teal">Save</Button>
+                    <Button
+                      variantColor="teal"
+                      type="submit"
+                      isLoading={this.state.isLoadingForEmail}
+                      loadingText="Saving"
+                    >
+                      Save
+                    </Button>
                   </form>
                 </AccordionPanel>
               </>
@@ -248,7 +280,13 @@ class EditableBio extends Component {
                   </AccordionHeader>
                 </Flex>
                 <AccordionPanel mb={4}>
-                  <form>
+                  <form
+                    onSubmit={(e) =>
+                      this.handleUpdateProfile(e, {
+                        password: this.state.password,
+                      })
+                    }
+                  >
                     <InputGroup size="md" mb={4}>
                       <Input
                         pr="4.5rem"
@@ -268,7 +306,14 @@ class EditableBio extends Component {
                         </Button>
                       </InputRightElement>
                     </InputGroup>
-                    <Button variantColor="teal">Save</Button>
+                    <Button
+                      variantColor="teal"
+                      type="submit"
+                      isLoading={this.state.isLoadingForPass}
+                      loadingText="Saving"
+                    >
+                      Save
+                    </Button>
                   </form>
                 </AccordionPanel>
               </>
