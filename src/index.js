@@ -11,7 +11,7 @@ import HomePage from "./Components/HomePage/HomePage";
 import { Provider } from "react-redux";
 import store from "./Store/store";
 import LoginModal from "./Components/loginModal";
-
+import HostListing from "./Components/BecomeAHost/startYourListingForm";
 ReactDOM.render(
   <React.StrictMode>
     <Router>
@@ -20,13 +20,14 @@ ReactDOM.render(
         <Provider store={store}>
           <Header />
           <LoginModal />
-          <Switch>
+          {/* <Switch>
             <Route exact path="/">
               <HomePage />
             </Route>
             <Route path="/city/:cityName" component={ListingsPage}></Route>
             <Route path="/listing/:id" component={MainListingShowCase}></Route>
-          </Switch>
+        </Switch> */}
+          <HostListing />
           <Footer />
         </Provider>
       </ThemeProvider>
