@@ -35,8 +35,8 @@ class BookingHistory extends Component {
               mt={6}
             >
               <Image
-                src="https://www.intechnic.com/hubfs/Blog/Featured%20Images/Best%20Hotel%20Website%20Designs.jpg"
-                alt={listing.imageAlt}
+                src={listing.listingImage.url}
+                alt="No Preview available"
               />
 
               <Box p="6" my={2}>
@@ -66,7 +66,7 @@ class BookingHistory extends Component {
                 <Box my={2}>
                   &#x20B9;{listing.pricePerDay}
                   <Box as="span" color="gray.600" fontSize="sm">
-                    / wk
+                    / night
                   </Box>
                 </Box>
 

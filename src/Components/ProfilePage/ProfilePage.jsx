@@ -92,9 +92,9 @@ class ProfilePage extends Component {
                 <AccordionPanel mb={4}>
                   {this.state.isLoading ? (
                     <Stack isInline spacing={10}>
-                      <Skeleton height="400px" my="10px" w="300px" />
-                      <Skeleton height="400px" my="10px" w="300px" />
-                      <Skeleton height="400px" my="10px" w="300px" />
+                      <Skeleton height="300px" my="10px" w="200px" />
+                      <Skeleton height="300px" my="10px" w="200px" />
+                      <Skeleton height="300px" my="10px" w="200px" />
                     </Stack>
                   ) : (
                     <BookingHistory
@@ -131,9 +131,9 @@ class ProfilePage extends Component {
                   <AccordionPanel mb={4}>
                     {this.state.isLoading ? (
                       <Stack isInline spacing={10}>
-                        <Skeleton height="400px" my="10px" w="300px" />
-                        <Skeleton height="400px" my="10px" w="300px" />
-                        <Skeleton height="400px" my="10px" w="300px" />
+                        <Skeleton height="300px" my="10px" w="300px" />
+                        <Skeleton height="300px" my="10px" w="300px" />
+                        <Skeleton height="300px" my="10px" w="300px" />
                       </Stack>
                     ) : (
                       <YourListings
