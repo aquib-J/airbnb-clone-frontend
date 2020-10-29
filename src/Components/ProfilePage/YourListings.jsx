@@ -12,72 +12,19 @@ import {
 } from "@chakra-ui/core";
 
 class BookingHistory extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      listings: this.props.listings,
+    };
+  }
+
   render() {
-    const property = [
-      {
-        imageUrl:
-          "https://www.intechnic.com/hubfs/Imported_Blog_Media/Best-Hotel-Website-Designs-SMALL-3.jpg",
-        imageAlt: "Rear view of modern home with pool",
-        beds: 3,
-        baths: 2,
-        title:
-          "Modern home in city center in the heart of historic Los Angeles",
-        formattedPrice: "$1,900.00",
-        reviewCount: 34,
-        rating: 4,
-      },
-      {
-        imageUrl:
-          "https://www.intechnic.com/hubfs/Imported_Blog_Media/Best-Hotel-Website-Designs-SMALL-3.jpg",
-        imageAlt: "Rear view of modern home with pool",
-        beds: 3,
-        baths: 2,
-        title: "In the heart of historic Los Angeles",
-        formattedPrice: "$1,900.00",
-        reviewCount: 34,
-        rating: 4,
-      },
-      {
-        imageUrl:
-          "https://www.intechnic.com/hubfs/Imported_Blog_Media/Best-Hotel-Website-Designs-SMALL-3.jpg",
-        imageAlt: "Rear view of modern home with pool",
-        beds: 3,
-        baths: 2,
-        title:
-          "Modern home in city center in the heart of historic Los Angeles",
-        formattedPrice: "$1,900.00",
-        reviewCount: 34,
-        rating: 4,
-      },
-      {
-        imageUrl:
-          "https://www.intechnic.com/hubfs/Imported_Blog_Media/Best-Hotel-Website-Designs-SMALL-3.jpg",
-        imageAlt: "Rear view of modern home with pool",
-        beds: 3,
-        baths: 2,
-        title:
-          "Modern home in city center in the heart of historic Los Angeles",
-        formattedPrice: "$1,900.00",
-        reviewCount: 34,
-        rating: 4,
-      },
-      {
-        imageUrl:
-          "https://www.intechnic.com/hubfs/Imported_Blog_Media/Best-Hotel-Website-Designs-SMALL-3.jpg",
-        imageAlt: "Rear view of modern home with pool",
-        beds: 3,
-        baths: 2,
-        title:
-          "Modern home in city center in the heart of historic Los Angeles",
-        formattedPrice: "$1,900.00",
-        reviewCount: 34,
-        rating: 4,
-      },
-    ];
     return (
       <Box pb={5}>
         <Flex flexWrap="wrap">
-          {property.map((property) => (
+          {this.state.listings.map((listing) => (
             <Box
               maxW="sm"
               borderWidth="1px"
@@ -87,37 +34,49 @@ class BookingHistory extends Component {
               mx={6}
               mt={6}
             >
-              <Image src={property.imageUrl} alt={property.imageAlt} />
+              <Image
+                src="https://www.intechnic.com/hubfs/Blog/Featured%20Images/Best%20Hotel%20Website%20Designs.jpg"
+                alt={listing.imageAlt}
+              />
 
-              <Box p="4">
+              <Box p="6" my={2}>
                 <Box d="flex" alignItems="baseline">
-                  <Badge rounded="full" px="2" variantColor="teal">
-                    New
-                  </Badge>
                   <Box
                     color="gray.500"
                     fontWeight="semibold"
                     letterSpacing="wide"
                     fontSize="xs"
                     textTransform="uppercase"
-                    ml="2"
                   >
-                    {property.beds} beds &bull; {property.baths} baths
+                    {listing.features.beds} beds &bull;{" "}
+                    {listing.features.bathrooms} baths
                   </Box>
                 </Box>
 
-                <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight">
-                  {property.title}
+                <Box
+                  fontWeight="semibold"
+                  as="h4"
+                  lineHeight="tight"
+                  my={2}
+                  isTruncated
+                >
+                  {listing.listingDescription}
                 </Box>
 
-                <Box>
-                  {property.formattedPrice}
+                <Box my={2}>
+                  &#x20B9;{listing.pricePerDay}
                   <Box as="span" color="gray.600" fontSize="sm">
                     / wk
                   </Box>
                 </Box>
 
-                <Box as="span" d="flex" alignItems="center" color="gray.600">
+                <Box
+                  as="span"
+                  d="flex"
+                  alignItems="center"
+                  my={2}
+                  color="gray.600"
+                >
                   <Box
                     as={AiFillStar}
                     size="24px"
@@ -125,13 +84,21 @@ class BookingHistory extends Component {
                     color="#f24b5b"
                   />
                   <Text fontFamily="montserrat" fontSize="16px" ml={1}>
-                    5
+                    {listing.avgRating}
                   </Text>
                 </Box>
 
-                <Box d="flex" mt="2" alignItems="center">
-                  <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                    {property.reviewCount} reviews
+                <Box d="flex" mt={2} alignItems="baseline">
+                  <Box as="span" color="gray.600" fontSize="sm">
+                    Added On{" "}
+                    <Badge
+                      rounded="full"
+                      px="2"
+                      variantColor="teal"
+                      color="black"
+                    >
+                      {listing.createdAt.split("T11")[0]}
+                    </Badge>
                   </Box>
                 </Box>
               </Box>

@@ -63,12 +63,14 @@ class ProfilePage extends Component {
                 mb={5}
               />
             </Skeleton>
-            <FormControl>
-              <Input type="file" size="sm"></Input>
-            </FormControl>
+            <Skeleton mt={5} isLoaded={!this.state.isLoading}>
+              <FormControl>
+                <Input type="file" size="sm"></Input>
+              </FormControl>
+            </Skeleton>
           </Flex>
         </Flex>
-        <Accordion allowToggle py={5}>
+        <Accordion allowToggle allowMultiple py={5}>
           <AccordionItem borderTop="none" defaultIsOpen={false}>
             {({ isExpanded }) => (
               <>
@@ -91,7 +93,17 @@ class ProfilePage extends Component {
                   </AccordionHeader>
                 </Flex>
                 <AccordionPanel mb={4}>
-                  <BookingHistory />
+                  {this.state.isLoading ? (
+                    <Stack isInline spacing={10}>
+                      <Skeleton height="400px" my="10px" w="300px" />
+                      <Skeleton height="400px" my="10px" w="300px" />
+                      <Skeleton height="400px" my="10px" w="300px" />
+                    </Stack>
+                  ) : (
+                    <BookingHistory
+                      bookings={[...this.state.user.bookingHistory]}
+                    />
+                  )}
                 </AccordionPanel>
               </>
             )}
@@ -102,7 +114,7 @@ class ProfilePage extends Component {
               <>
                 <Flex justify="space-between">
                   <Box flex="100%" pb={isExpanded ? 4 : 8} pt={8}>
-                    <Heading>Your Listings</Heading>
+                    <Heading>Your listings</Heading>
                   </Box>
                   <AccordionHeader
                     flex={1}
@@ -119,7 +131,19 @@ class ProfilePage extends Component {
                   </AccordionHeader>
                 </Flex>
                 <AccordionPanel mb={4}>
-                  <YourListings />
+                  <AccordionPanel mb={4}>
+                    {this.state.isLoading ? (
+                      <Stack isInline spacing={10}>
+                        <Skeleton height="400px" my="10px" w="300px" />
+                        <Skeleton height="400px" my="10px" w="300px" />
+                        <Skeleton height="400px" my="10px" w="300px" />
+                      </Stack>
+                    ) : (
+                      <YourListings
+                        listings={[...this.state.user.hostListing].slice(0, 4)}
+                      />
+                    )}
+                  </AccordionPanel>
                 </AccordionPanel>
               </>
             )}
