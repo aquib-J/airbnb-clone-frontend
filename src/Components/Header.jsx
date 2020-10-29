@@ -188,6 +188,9 @@ class Header extends Component {
               <MenuList>
                 <MenuGroup title="Profile">
                   <MenuItem onClick={this.props.toggle}>Login</MenuItem>
+                  <Link to={`/profile`}>
+                    <MenuItem>Profile </MenuItem>
+                  </Link>
                   <MenuItem>Payments </MenuItem>
                 </MenuGroup>
                 <MenuDivider />

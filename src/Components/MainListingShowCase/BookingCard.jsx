@@ -51,7 +51,13 @@ export class BookingCard extends Component {
 
   render() {
     const ExampleCustomInput = ({ value, onClick }) => (
-      <Button onClick={onClick} color="#b0b0b0" bg="none" variant="link">
+      <Button
+        onClick={onClick}
+        _focus={{ outline: "none" }}
+        color="#b0b0b0"
+        bg="none"
+        variant="link"
+      >
         {value}
       </Button>
     );
@@ -137,19 +143,19 @@ export class BookingCard extends Component {
             ></DatePicker>
           </Stack>
           <Box w="100%"></Box>
-          <Box borderTop="1px" p={2} borderColor="#b0b0b0" w="100%">
+          <Box borderTop="1px" borderColor="#b0b0b0" w="100%">
             <NumberInput
-              defaultValue={this.props.guests ? this.props.guests : 0}
+              defaultValue={this.props.guests ? this.props.guests : 1}
               max={this.props.maxGuests}
-              min={0}
+              min={1}
             >
-              <InputGroup size="md">
+              <InputGroup size="lg">
                 <InputLeftAddon children="Guests" />
                 <NumberInputField variant="filled" bg="none" />
               </InputGroup>
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
+              <NumberInputStepper zIndex={1}>
+                <NumberIncrementStepper zIndex={1} />
+                <NumberDecrementStepper zIndex={1} />
               </NumberInputStepper>
             </NumberInput>
           </Box>

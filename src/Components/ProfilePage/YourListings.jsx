@@ -94,9 +94,16 @@ class BookingHistory extends Component {
                   <Badge rounded="full" px="2" variantColor="teal">
                     New
                   </Badge>
-                  <Badge rounded="full" px="2" variantColor="teal">
-                    New
-                  </Badge>
+                  <Box
+                    color="gray.500"
+                    fontWeight="semibold"
+                    letterSpacing="wide"
+                    fontSize="xs"
+                    textTransform="uppercase"
+                    ml="2"
+                  >
+                    {property.beds} beds &bull; {property.baths} baths
+                  </Box>
                 </Box>
 
                 <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight">
@@ -104,7 +111,7 @@ class BookingHistory extends Component {
                 </Box>
 
                 <Box>
-                  &#x20B9;{property.formattedPrice}
+                  {property.formattedPrice}
                   <Box as="span" color="gray.600" fontSize="sm">
                     / wk
                   </Box>
