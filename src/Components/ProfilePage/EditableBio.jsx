@@ -120,6 +120,9 @@ class EditableBio extends Component {
 
     return (
       <Box w="60%">
+        <Text fontFamily="montserrat" as="i">
+          Hi {this.state.firstName},
+        </Text>
         <Heading>Personal Info</Heading>
         <Accordion allowToggle={true} py={5}>
           <AccordionItem borderTop="none" defaultIsOpen={false}>

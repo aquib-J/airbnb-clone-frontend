@@ -39,9 +39,6 @@ class ProfilePage extends Component {
   render() {
     return (
       <Box px="120px" py={10}>
-        <Text fontFamily="montserrat" as="i">
-          Hi {this.state.user.firstName},
-        </Text>
         <Flex w="100%">
           {this.state.isLoading ? (
             <Stack w="70%">
