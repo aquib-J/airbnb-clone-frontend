@@ -1,6 +1,15 @@
-import { Box, Divider, Flex, IconButton, Image, Text } from "@chakra-ui/core";
+import {
+  Box,
+  Divider,
+  Flex,
+  IconButton,
+  Image,
+  PseudoBox,
+  Text,
+} from "@chakra-ui/core";
 import React, { Component } from "react";
 import { AiFillStar, AiOutlineHeart, AiOutlineStar } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 class ListingCard extends Component {
   render() {
@@ -47,16 +56,19 @@ class ListingCard extends Component {
             />
           </Flex>
 
-          <Box
-            mt="1"
-            fontWeight={600}
-            as="h1"
-            fontSize="18px"
-            lineHeight="tight"
-            isTruncated
-          >
-            {listingDescription}
-          </Box>
+          <Link to={`/listing/${id}`}>
+            <PseudoBox
+              mt="1"
+              fontWeight={600}
+              as="h1"
+              fontSize="18px"
+              lineHeight="tight"
+              isTruncated
+              color="gray.600"
+            >
+              {listingDescription}
+            </PseudoBox>
+          </Link>
           <Divider w={20} />
           <Box>
             <Box as="span" color="gray.600" fontSize="sm">
