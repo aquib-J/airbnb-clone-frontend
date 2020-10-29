@@ -186,8 +186,11 @@ class Header extends Component {
                 bg="transparent"
               />
               <MenuList>
+                {/* conditionally renders the user name if user exists in memory */}
+            <>{localStorage.getItem('user') && <MenuItem> Hi {JSON.parse(localStorage.getItem('user')).firstName} </MenuItem> }</>  
                 <MenuGroup title="Profile">
-                  <MenuItem onClick={this.props.toggle}>Login</MenuItem>
+                  <MenuItem onClick={this.props.toggle}>Login/Signup</MenuItem>
+                  <MenuItem onClick={()=>{localStorage.removeItem('user')}}>Logout</MenuItem>
                   <MenuItem>Payments </MenuItem>
                 </MenuGroup>
                 <MenuDivider />
