@@ -13,6 +13,7 @@ class ListingCard extends Component {
       pricePerDay,
       features,
     } = this.props;
+    console.log(images);
     return (
       <Box
         w="100%"
@@ -23,7 +24,16 @@ class ListingCard extends Component {
         display={{ md: "flex" }}
       >
         <Box w={{ lg: "22%", md: "100%" }}>
-          <Image src={images[0].url} alt="Woman paying for a purchase" />
+          <Image
+            w="100%"
+            h="200px"
+            src={
+              images.length
+                ? images[0].url
+                : "https://test.crowdwisdom.co.in/images/common/no-image.png"
+            }
+            alt="Woman paying for a purchase"
+          />
         </Box>
         <Box py="4" px="6" flex="1">
           <Flex w="100%" justify="space-between" alignItems="baseline">

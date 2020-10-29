@@ -19,6 +19,7 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   FormLabel,
+  Skeleton,
 } from "@chakra-ui/core";
 import React, { Component } from "react";
 import { getListings } from "../Api";
@@ -267,9 +268,11 @@ class LisitngsPage extends Component {
             ))
           )
         ) : (
-          <Box my={4}>
-            <Spinner size="xl" />
-          </Box>
+          <Stack spacing={10}>
+            <Skeleton height="20px" my="10px" w="100%" />
+            <Skeleton height="20px" my="10px" w="100%" />
+            <Skeleton height="20px" my="10px" w="100%" />
+          </Stack>
         )}
       </Box>
     );
