@@ -19,6 +19,7 @@ import EditableBio from "./EditableBio";
 import BookingHistory from "./BookingHistory";
 import YourListings from "./YourListings";
 import { getUser } from "../Api";
+import { connect } from "react-redux";
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class ProfilePage extends Component {
   }
 
   async componentDidMount() {
-    let user = await getUser();
+    let user = await getUser(this.props.state.user.currentUser.id);
     this.setState({ user, isLoading: false });
     console.log(user);
   }
@@ -47,7 +48,10 @@ class ProfilePage extends Component {
               <Skeleton height="20px" my="10px" w="100%" />
             </Stack>
           ) : (
-            <EditableBio {...this.state.user} />
+            <EditableBio
+              {...this.state.user}
+              user={this.props.state.user.currentUser.id}
+            />
           )}
 
           <Flex flexDirection="column" align="center" ml="auto">
@@ -151,4 +155,8 @@ class ProfilePage extends Component {
   }
 }
 
-export default ProfilePage;
+const mapStateToProps = (state) => ({
+  state: state,
+});
+
+export default connect(mapStateToProps)(ProfilePage);

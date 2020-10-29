@@ -73,6 +73,7 @@ class MainListingShowCase extends Component {
             features={listing.features}
           />
           <BookingCard
+            id={listing.id}
             price={listing.pricePerDay}
             misc={listing.miscCostPercentage}
             rating={listing.avgRating}

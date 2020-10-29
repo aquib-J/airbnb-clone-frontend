@@ -66,7 +66,7 @@ class EditableBio extends Component {
       isLoadingForDOB: true,
       isLoadingForIntro: true,
     });
-    let res = await updateUser(1, params);
+    let res = await updateUser(this.props.user, params);
     this.setState({
       firstName: res.firstName,
       lastName: res.lastName,

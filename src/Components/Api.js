@@ -62,13 +62,13 @@ export async function createListing(data) {
       `https://airbnb-clone-backend-1.herokuapp.com/api/v1/listings`,
       data
     );
-    return res.data
+    return res.data;
   } catch (err) {
     console.log(err);
   }
 }
 
-export async function getUser(userID = 1) {
+export async function getUser(userID) {
   try {
     let res = await Axios.get(
       `https://airbnb-clone-backend-1.herokuapp.com/api/v1/users/${userID}`
@@ -84,6 +84,19 @@ export async function updateUser(userID, params) {
     // console.log("HERE");
     let res = await Axios.put(
       `https://airbnb-clone-backend-1.herokuapp.com/api/v1/users/${userID}`,
+      params
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function createBooking(params) {
+  try {
+    // console.log("HERE");
+    let res = await Axios.post(
+      `https://airbnb-clone-backend-1.herokuapp.com/api/v1/bookings/create`,
       params
     );
     return res.data;

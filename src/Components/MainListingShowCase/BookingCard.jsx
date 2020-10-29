@@ -16,6 +16,11 @@ import {
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import { AiOutlineStar } from "react-icons/ai";
+import { connect } from "react-redux";
+import { toggleModal } from "../../Store/toggle";
+import { createBooking } from "../Api";
+import { compose } from "redux";
+import { withRouter } from "react-router-dom";
 
 export class BookingCard extends Component {
   constructor(props) {
@@ -47,6 +52,21 @@ export class BookingCard extends Component {
       arr.push(new Date(dt));
     }
     return arr;
+  };
+
+  handleBooking = async () => {
+    if (!this.props.state.user.currentUser) {
+      this.props.toggle();
+    } else {
+      let obj = {
+        userId: this.props.state.user.currentUser.id,
+        listingId: this.props.id,
+        checkinDate: this.state.startDate,
+        checkoutDate: this.state.endDate,
+      };
+      let res = await createBooking(obj);
+      this.props.history.push(`/profile`);
+    }
   };
 
   render() {
@@ -167,6 +187,7 @@ export class BookingCard extends Component {
           rounded="lg"
           color="white"
           size="lg"
+          onClick={this.handleBooking}
         >
           Reserve
         </Button>
@@ -196,4 +217,15 @@ export class BookingCard extends Component {
   }
 }
 
-export default BookingCard;
+const mapStateToProps = (state) => ({
+  state: state,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  toggle: () => dispatch(toggleModal()),
+});
+
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(BookingCard);

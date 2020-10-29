@@ -19,13 +19,14 @@ import {
   InputGroup,
   InputRightElement,
   Alert,
-  AlertIcon
+  AlertIcon,
 } from "@chakra-ui/core";
 import { connect } from "react-redux";
 import { toggleModal } from "../Store/toggle";
+import { login } from "../Store/login";
 
 // can be moved to redux thunk
-import Axios from 'axios';
+import Axios from "axios";
 
 class loginModal extends Component {
   constructor(props) {
@@ -33,10 +34,10 @@ class loginModal extends Component {
 
     this.state = {
       show: false,
-      
-      errorMessage:'generic Error Message',
-      showLoginError:'none',
-      showSignupError:'none',
+
+      errorMessage: "generic Error Message",
+      showLoginError: "none",
+      showSignupError: "none",
 
       firstName: "",
       lastName: "",
@@ -54,65 +55,61 @@ class loginModal extends Component {
     });
   };
 
-  userLogin=async e=>{
+  userLogin = async (e) => {
     e.preventDefault();
-    let loginReqBody={
-      email:this.state.email,
-      password:this.state.password
-    }
-    let res={}
-    try{
-      let {data:res}=await Axios.post(`http://127.0.0.1:8000/api/v1/auth/login`,loginReqBody);
+    let loginReqBody = {
+      email: this.state.email,
+      password: this.state.password,
+    };
+    let res = {};
+    try {
+      let { data: res } = await Axios.post(
+        `https://airbnb-clone-backend-1.herokuapp.com/api/v1/auth/login`,
+        loginReqBody
+      );
 
-      localStorage.setItem('auth-token',res.token);
-      localStorage.setItem('user',JSON.stringify(res.user));
-      this.setState({showLoginError:'none'});
-      this.setState({errorMessage:''});
+      localStorage.setItem("auth-token", res.token);
+      localStorage.setItem("user", JSON.stringify(res.user));
+      this.props.login(res.user);
+      this.setState({ showLoginError: "none" });
+      this.setState({ errorMessage: "" });
       this.props.toggle();
       // breadcrumb with logged in message :TODO
-    
-    }
-
-    catch(err){
-      this.setState({errorMessage:err.response.data.error})
-      this.setState({showLoginError:' '})
+    } catch (err) {
+      this.setState({ errorMessage: err.response.data.error });
+      this.setState({ showLoginError: " " });
       // console.error(err);
-
     }
+  };
 
-  }
-
-    
-
-  userSignup=async e=>{
+  userSignup = async (e) => {
     e.preventDefault();
-    let signupReqBody={
-      firstName:this.state.firstName,
-      lastName:this.state.lastName,
-      email:this.state.email,
-      password:this.state.password
-    }
-      let res={};
-      try{
-    let {data:res}=await Axios.post(`http://127.0.0.1:8000/api/v1/auth/signup`,signupReqBody);
-    
-    localStorage.setItem('auth-token',res.token);
-    localStorage.setItem('user',JSON.stringify(res.user));
-    this.setState({showSignupError:'none'});
-    this.setState({errorMessage:''});
-    this.props.toggle();
-    // breadcrumb with logged in message :TODO
-  
-  
-  }
-      catch(err){
-        this.setState({errorMessage:err.response.data.error})
-        this.setState({showSignupError:' '})
-        // console.error(err);
+    let signupReqBody = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email,
+      password: this.state.password,
+    };
+    let res = {};
+    try {
+      let { data: res } = await Axios.post(
+        `https://airbnb-clone-backend-1.herokuapp.com/api/v1/auth/signup`,
+        signupReqBody
+      );
 
-      }
-    
-  }
+      localStorage.setItem("auth-token", res.token);
+      localStorage.setItem("user", JSON.stringify(res.user));
+      this.props.login(res.user);
+      this.setState({ showSignupError: "none" });
+      this.setState({ errorMessage: "" });
+      this.props.toggle();
+      // breadcrumb with logged in message :TODO
+    } catch (err) {
+      this.setState({ errorMessage: err.response.data.error });
+      this.setState({ showSignupError: " " });
+      // console.error(err);
+    }
+  };
 
   render() {
     return (
@@ -122,7 +119,8 @@ class loginModal extends Component {
           finalFocusRef={this.finalRef}
           isOpen={this.props.isOpen}
           onClose={this.props.toggle}
-          isCentered>
+          isCentered
+        >
           <ModalOverlay />
           <ModalContent rounded="lg">
             <ModalHeader>Welcome , {this.state.firstName}</ModalHeader>
@@ -138,13 +136,12 @@ class loginModal extends Component {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <form
-                    onSubmit={(e)=>this.userLogin(e)}>
+                  <form onSubmit={(e) => this.userLogin(e)}>
                     <ModalBody pb={6}>
                       <FormControl>
                         <FormLabel>Email</FormLabel>
                         <Input
-                          onChange={e => {
+                          onChange={(e) => {
                             this.setState({ email: e.currentTarget.value });
                           }}
                           value={this.state.email}
@@ -156,7 +153,7 @@ class loginModal extends Component {
                         <FormLabel>Password</FormLabel>
                         <InputGroup size="md">
                           <Input
-                            onChange={e => {
+                            onChange={(e) => {
                               this.setState({
                                 password: e.currentTarget.value,
                               });
@@ -170,7 +167,8 @@ class loginModal extends Component {
                             <Button
                               h="1.75rem"
                               size="sm"
-                              onClick={this.handleShow}>
+                              onClick={this.handleShow}
+                            >
                               {this.state.show ? "Hide" : "Show"}
                             </Button>
                           </InputRightElement>
@@ -178,9 +176,9 @@ class loginModal extends Component {
                       </FormControl>
                     </ModalBody>
                     <Alert status="error" display={this.state.showLoginError}>
-                        <AlertIcon />
-                        {this.state.errorMessage}
-                      </Alert>
+                      <AlertIcon />
+                      {this.state.errorMessage}
+                    </Alert>
                     <ModalFooter>
                       <Button bg="#f3575e" color="white" mr={3} type="submit">
                         Login
@@ -189,13 +187,12 @@ class loginModal extends Component {
                   </form>
                 </TabPanel>
                 <TabPanel>
-                  <form
-                    onSubmit={(e)=>this.userSignup(e)}>
+                  <form onSubmit={(e) => this.userSignup(e)}>
                     <ModalBody pb={6}>
                       <FormControl>
                         <FormLabel>First Name</FormLabel>
                         <Input
-                          onChange={e => {
+                          onChange={(e) => {
                             this.setState({ firstName: e.currentTarget.value });
                           }}
                           value={this.state.firstName}
@@ -205,7 +202,7 @@ class loginModal extends Component {
                       <FormControl>
                         <FormLabel mt={4}>Last Name</FormLabel>
                         <Input
-                          onChange={e => {
+                          onChange={(e) => {
                             this.setState({ lastName: e.currentTarget.value });
                           }}
                           value={this.state.lastName}
@@ -215,7 +212,7 @@ class loginModal extends Component {
                       <FormControl mt={4}>
                         <FormLabel>Email</FormLabel>
                         <Input
-                          onChange={e => {
+                          onChange={(e) => {
                             this.setState({ email: e.currentTarget.value });
                           }}
                           value={this.state.email}
@@ -229,7 +226,7 @@ class loginModal extends Component {
                         <InputGroup size="md">
                           <Input
                             value={this.state.password}
-                            onChange={e => {
+                            onChange={(e) => {
                               this.setState({
                                 password: e.currentTarget.value,
                               });
@@ -242,7 +239,8 @@ class loginModal extends Component {
                             <Button
                               h="1.75rem"
                               size="sm"
-                              onClick={this.handleShow}>
+                              onClick={this.handleShow}
+                            >
                               {this.state.show ? "Hide" : "Show"}
                             </Button>
                           </InputRightElement>
@@ -251,11 +249,10 @@ class loginModal extends Component {
                     </ModalBody>
 
                     <Alert status="error" display={this.state.showSignupError}>
-                        <AlertIcon />
-                        {this.state.errorMessage}
-                      </Alert>
+                      <AlertIcon />
+                      {this.state.errorMessage}
+                    </Alert>
                     <ModalFooter>
-                    
                       <Button bg="#f3575e" color="white" mr={3} type="submit">
                         SignUp
                       </Button>
@@ -271,12 +268,13 @@ class loginModal extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isOpen: state.toggle.isOpen,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   toggle: () => dispatch(toggleModal()),
+  login: (data) => dispatch(login(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(loginModal);

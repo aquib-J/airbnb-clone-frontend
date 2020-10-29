@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { toggleModal } from "../Store/toggle";
+import { logout } from "../Store/login";
 
 import {
   Box,
@@ -92,6 +93,14 @@ class Header extends Component {
     this.handleToggle();
     this.props.history.push(`/city/${this.state.location}`);
   };
+
+  handleHosting = () => {
+    if (this.props.state.user.currentUser) {
+      this.props.history.push(`/hostlisting`);
+    } else {
+      this.props.toggle();
+    }
+  };
   render() {
     const ExampleCustomInput = ({ value, onClick }) => (
       <Button
@@ -163,6 +172,7 @@ class Header extends Component {
               borderRadius={50}
               fontSize="14px"
               fontWeight="600"
+              onClick={this.handleHosting}
             >
               Become a host
             </Button>
@@ -187,12 +197,33 @@ class Header extends Component {
               />
               <MenuList>
                 {/* conditionally renders the user name if user exists in memory */}
-            <>{localStorage.getItem('user') && <MenuItem> Hi {JSON.parse(localStorage.getItem('user')).firstName} </MenuItem> }</>  
+                <>
+                  {Object.keys(this.props.state.user).length > 0 && (
+                    <MenuItem>
+                      {" "}
+                      Hi {this.props.state.user.currentUser.firstName}{" "}
+                    </MenuItem>
+                  )}
+                </>
                 <MenuGroup title="Profile">
-                  <MenuItem onClick={this.props.toggle}>Login/Signup</MenuItem>
-                  <MenuItem onClick={()=>{localStorage.removeItem('user')}}>Logout</MenuItem>
+                  <MenuItem
+                    onClick={this.props.toggle}
+                    d={this.props.state.user.currentUser ? "none" : "block"}
+                  >
+                    Login/Signup
+                  </MenuItem>
+                  <MenuItem
+                    onClick={this.props.logout}
+                    d={this.props.state.user.currentUser ? "block" : "none"}
+                  >
+                    Logout
+                  </MenuItem>
                   <Link to={`/profile`}>
-                    <MenuItem>Profile </MenuItem>
+                    <MenuItem
+                      d={this.props.state.user.currentUser ? "block" : "none"}
+                    >
+                      Profile{" "}
+                    </MenuItem>
                   </Link>
                   <MenuItem>Payments </MenuItem>
                 </MenuGroup>
@@ -373,6 +404,7 @@ const mapDispatchToProps = (dispatch) => ({
   endDate: (date) => dispatch(setEndDate(date)),
   guests: (number) => dispatch(setGuests(number)),
   city: (cityName) => dispatch(setCity(cityName)),
+  logout: () => dispatch(logout()),
 });
 
 export default compose(
