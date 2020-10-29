@@ -1,9 +1,7 @@
 import {
   Box,
   Button,
-  ButtonGroup,
   Heading,
-  Spinner,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -19,12 +17,12 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   FormLabel,
+  Skeleton,
 } from "@chakra-ui/core";
 import React, { Component } from "react";
 import { getListings } from "../Api";
 import ListingCard from "./ListingCard";
 import { connect } from "react-redux";
-import Axios from "axios";
 import { Link } from "react-router-dom";
 
 class LisitngsPage extends Component {
@@ -261,15 +259,15 @@ class LisitngsPage extends Component {
             <Box my={4}>Oh Snap ! We are not yet operational in this city</Box>
           ) : (
             this.state.listings.map((item) => (
-              <Link to={`/listing/${item.id}`}>
-                <ListingCard key={item.id} {...item} />
-              </Link>
+              <ListingCard key={item.id} {...item} />
             ))
           )
         ) : (
-          <Box my={4}>
-            <Spinner size="xl" />
-          </Box>
+          <Stack spacing={10}>
+            <Skeleton height="20px" my="10px" w="100%" />
+            <Skeleton height="20px" my="10px" w="100%" />
+            <Skeleton height="20px" my="10px" w="100%" />
+          </Stack>
         )}
       </Box>
     );

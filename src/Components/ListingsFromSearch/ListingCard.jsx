@@ -1,6 +1,15 @@
-import { Box, Divider, Flex, IconButton, Image, Text } from "@chakra-ui/core";
+import {
+  Box,
+  Divider,
+  Flex,
+  IconButton,
+  Image,
+  PseudoBox,
+  Text,
+} from "@chakra-ui/core";
 import React, { Component } from "react";
 import { AiFillStar, AiOutlineHeart, AiOutlineStar } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 class ListingCard extends Component {
   render() {
@@ -13,6 +22,7 @@ class ListingCard extends Component {
       pricePerDay,
       features,
     } = this.props;
+    console.log(images);
     return (
       <Box
         w="100%"
@@ -23,7 +33,16 @@ class ListingCard extends Component {
         display={{ md: "flex" }}
       >
         <Box w={{ lg: "22%", md: "100%" }}>
-          <Image src={images[0].url} alt="Woman paying for a purchase" />
+          <Image
+            w="100%"
+            h="200px"
+            src={
+              images.length
+                ? images[0].url
+                : "https://test.crowdwisdom.co.in/images/common/no-image.png"
+            }
+            alt="Woman paying for a purchase"
+          />
         </Box>
         <Box py="4" px="6" flex="1">
           <Flex w="100%" justify="space-between" alignItems="baseline">
@@ -37,16 +56,19 @@ class ListingCard extends Component {
             />
           </Flex>
 
-          <Box
-            mt="1"
-            fontWeight={600}
-            as="h1"
-            fontSize="18px"
-            lineHeight="tight"
-            isTruncated
-          >
-            {listingDescription}
-          </Box>
+          <Link to={`/listing/${id}`}>
+            <PseudoBox
+              mt="1"
+              fontWeight={600}
+              as="h1"
+              fontSize="18px"
+              lineHeight="tight"
+              isTruncated
+              color="gray.600"
+            >
+              {listingDescription}
+            </PseudoBox>
+          </Link>
           <Divider w={20} />
           <Box>
             <Box as="span" color="gray.600" fontSize="sm">

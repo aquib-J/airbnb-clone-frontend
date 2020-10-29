@@ -191,6 +191,9 @@ class Header extends Component {
                 <MenuGroup title="Profile">
                   <MenuItem onClick={this.props.toggle}>Login/Signup</MenuItem>
                   <MenuItem onClick={()=>{localStorage.removeItem('user')}}>Logout</MenuItem>
+                  <Link to={`/profile`}>
+                    <MenuItem>Profile </MenuItem>
+                  </Link>
                   <MenuItem>Payments </MenuItem>
                 </MenuGroup>
                 <MenuDivider />
