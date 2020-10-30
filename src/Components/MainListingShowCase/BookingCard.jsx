@@ -17,7 +17,7 @@ import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import { AiOutlineStar } from "react-icons/ai";
 import { connect } from "react-redux";
-import { toggleModal } from "../../Store/toggle";
+import { toggleConfirmation, toggleModal } from "../../Store/toggle";
 import { createBooking } from "../Api";
 import { compose } from "redux";
 import { withRouter } from "react-router-dom";
@@ -29,6 +29,7 @@ export class BookingCard extends Component {
     this.state = {
       startDate: this.props.startDate ? this.props.startDate : new Date(),
       endDate: this.props.endDate ? this.props.endDate : new Date(),
+      isLoading: false,
     };
   }
 
@@ -64,8 +65,10 @@ export class BookingCard extends Component {
         checkinDate: this.state.startDate,
         checkoutDate: this.state.endDate,
       };
+      this.setState({ isLoading: true });
       let res = await createBooking(obj);
-      this.props.history.push(`/profile`);
+      this.setState({ isLoading: false });
+      this.props.toggleConfirm();
     }
   };
 
@@ -188,6 +191,7 @@ export class BookingCard extends Component {
           color="white"
           size="lg"
           onClick={this.handleBooking}
+          isLoading={this.state.isLoading}
         >
           Reserve
         </Button>
@@ -223,6 +227,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   toggle: () => dispatch(toggleModal()),
+  toggleConfirm: () => dispatch(toggleConfirmation()),
 });
 
 export default compose(

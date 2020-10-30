@@ -13,6 +13,7 @@ import store from "./Store/store";
 import LoginModal from "./Components/loginModal";
 import HostListing from "./Components/BecomeAHost/startYourListingForm";
 import ProfilePage from "./Components/ProfilePage/ProfilePage";
+import BookingConfirmModal from "./Components/BookingConfirmModal";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -22,6 +23,7 @@ ReactDOM.render(
         <Provider store={store}>
           <Header />
           <LoginModal />
+          <BookingConfirmModal />
           <Switch>
             <Route exact path="/">
               <HomePage />
@@ -31,7 +33,7 @@ ReactDOM.render(
           </Switch>
           <Switch>
             <Route path="/hostlisting" component={HostListing}></Route>
-            </Switch>
+          </Switch>
           <Switch>
             <Route path="/profile" component={ProfilePage}></Route>
           </Switch>

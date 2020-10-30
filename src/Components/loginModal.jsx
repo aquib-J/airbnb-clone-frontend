@@ -43,6 +43,8 @@ class loginModal extends Component {
       lastName: "",
       email: "",
       password: "",
+
+      isLoading: false,
     };
 
     this.initialRef = React.createRef();
@@ -63,6 +65,7 @@ class loginModal extends Component {
     };
     let res = {};
     try {
+      this.setState({ isLoading: true });
       let { data: res } = await Axios.post(
         `https://airbnb-clone-backend-1.herokuapp.com/api/v1/auth/login`,
         loginReqBody
@@ -71,13 +74,13 @@ class loginModal extends Component {
       localStorage.setItem("auth-token", res.token);
       localStorage.setItem("user", JSON.stringify(res.user));
       this.props.login(res.user);
-      this.setState({ showLoginError: "none" });
+      this.setState({ showLoginError: "none", isLoading: false });
       this.setState({ errorMessage: "" });
       this.props.toggle();
       // breadcrumb with logged in message :TODO
     } catch (err) {
       this.setState({ errorMessage: err.response.data.error });
-      this.setState({ showLoginError: " " });
+      this.setState({ showLoginError: " ", isLoading: false });
       // console.error(err);
     }
   };
@@ -92,6 +95,8 @@ class loginModal extends Component {
     };
     let res = {};
     try {
+      this.setState({ isLoading: true });
+
       let { data: res } = await Axios.post(
         `https://airbnb-clone-backend-1.herokuapp.com/api/v1/auth/signup`,
         signupReqBody
@@ -100,13 +105,13 @@ class loginModal extends Component {
       localStorage.setItem("auth-token", res.token);
       localStorage.setItem("user", JSON.stringify(res.user));
       this.props.login(res.user);
-      this.setState({ showSignupError: "none" });
+      this.setState({ showSignupError: "none", isLoading: false });
       this.setState({ errorMessage: "" });
       this.props.toggle();
       // breadcrumb with logged in message :TODO
     } catch (err) {
       this.setState({ errorMessage: err.response.data.error });
-      this.setState({ showSignupError: " " });
+      this.setState({ showSignupError: " ", isLoading: false });
       // console.error(err);
     }
   };
@@ -180,7 +185,13 @@ class loginModal extends Component {
                       {this.state.errorMessage}
                     </Alert>
                     <ModalFooter>
-                      <Button bg="#f3575e" color="white" mr={3} type="submit">
+                      <Button
+                        bg="#f3575e"
+                        color="white"
+                        mr={3}
+                        type="submit"
+                        isLoading={this.state.isLoading}
+                      >
                         Login
                       </Button>
                     </ModalFooter>
@@ -253,7 +264,13 @@ class loginModal extends Component {
                       {this.state.errorMessage}
                     </Alert>
                     <ModalFooter>
-                      <Button bg="#f3575e" color="white" mr={3} type="submit">
+                      <Button
+                        bg="#f3575e"
+                        color="white"
+                        mr={3}
+                        type="submit"
+                        isLoading={this.state.isLoading}
+                      >
                         SignUp
                       </Button>
                     </ModalFooter>

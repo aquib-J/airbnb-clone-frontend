@@ -8,6 +8,7 @@ const slice = createSlice({
       state.currentUser = action.payload;
     },
     logout: (state, action) => {
+      localStorage.removeItem("user");
       delete state.currentUser;
     },
   },

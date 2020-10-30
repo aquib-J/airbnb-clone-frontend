@@ -11,8 +11,15 @@ const slice = createSlice({
         modal.isOpen = true;
       }
     },
+    toggleConfirmation: (modal, action) => {
+      if (modal.confirmOpen) {
+        modal.confirmOpen = false;
+      } else {
+        modal.confirmOpen = true;
+      }
+    },
   },
 });
 
-export const { toggleModal } = slice.actions;
+export const { toggleModal, toggleConfirmation } = slice.actions;
 export default slice.reducer;

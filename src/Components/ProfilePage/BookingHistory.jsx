@@ -39,7 +39,11 @@ class BookingHistory extends Component {
                 mt={6}
               >
                 <Image
-                  src={booking.listing.listingImage.url}
+                  src={
+                    booking.listing.listingImage
+                      ? booking.listing.listingImage.url
+                      : "https://www.gingerhotels.com/resourcefiles/hotelprofile/ginger-thane-hotel-th.jpg"
+                  }
                   alt="Listing Image"
                 />
 
