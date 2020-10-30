@@ -104,3 +104,15 @@ export async function createBooking(params) {
     console.log(error);
   }
 }
+
+export async function uploadProfileImage(data) {
+  try {
+    let res = await Axios.post(
+      `https://airbnb-clone-backend-1.herokuapp.com/api/v1/fileupload/profile`,
+      data
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+}

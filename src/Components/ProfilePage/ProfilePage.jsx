@@ -20,6 +20,7 @@ import BookingHistory from "./BookingHistory";
 import YourListings from "./YourListings";
 import { getUser } from "../Api";
 import { connect } from "react-redux";
+import { uploadProfileImage, updateUser } from "../Api";
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -28,12 +29,43 @@ class ProfilePage extends Component {
     this.state = {
       user: {},
       isLoading: true,
+      selectedFile: null,
+      profilePicture: null,
+      isLoadingUploadPhoto: false,
     };
   }
 
+  onFileChange = (event) => {
+    this.setState({ selectedFile: event.target.files[0] });
+  };
+  onFileUpload = async () => {
+    try {
+      this.setState({ isLoadingUploadPhoto: true });
+      const data = new FormData();
+      data.append("image", this.state.selectedFile);
+      const profile = await uploadProfileImage(data);
+      console.log(profile.imageUrl);
+      const res = await updateUser(this.props.state.user.currentUser.id, {
+        profilePictureUrl: profile.imageUrl,
+      });
+      this.setState({
+        isLoadingUploadPhoto: false,
+        profilePicture: res.profilePictureUrl,
+      });
+      console.log(profile);
+    } catch (err) {
+      this.setState({ isLoadingUploadPhoto: false });
+      console.log({ err: err });
+    }
+  };
+
   async componentDidMount() {
     let user = await getUser(this.props.state.user.currentUser.id);
-    this.setState({ user, isLoading: false });
+    this.setState({
+      user,
+      isLoading: false,
+      profilePicture: user.profilePictureUrl,
+    });
     console.log(user);
   }
 
@@ -60,13 +92,23 @@ class ProfilePage extends Component {
                 h={200}
                 w={200}
                 name="Segun Adebayo"
-                src={this.state.user.profilePictureUrl}
+                src={this.state.profilePicture}
                 mb={5}
               />
             </Skeleton>
             <Skeleton mt={5} isLoaded={!this.state.isLoading}>
               <FormControl>
-                <Input type="file" size="sm"></Input>
+                <Input
+                  type="file"
+                  size="sm"
+                  onChange={this.onFileChange}
+                ></Input>
+                <Button
+                  isLoading={this.state.isLoadingUploadPhoto}
+                  onClick={this.onFileUpload}
+                >
+                  Upload
+                </Button>
               </FormControl>
             </Skeleton>
           </Flex>

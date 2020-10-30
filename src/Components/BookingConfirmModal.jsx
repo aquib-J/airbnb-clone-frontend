@@ -34,7 +34,7 @@ class BookingConfirmModal extends Component {
                 <Icon name="check" size="32px" color="green.500" d="inline" />
                 <Box ml={5}>
                   <Text fontFamily="montserrat" fontWeight={600}>
-                    Congratulations.. {this.props.user}
+                    Congratulations.. {this.props.user?this.props.user:null}
                   </Text>
                   <Text fontFamily="montserrat">
                     Your booking has been confirmed
@@ -67,7 +67,7 @@ class BookingConfirmModal extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user.currentUser.firstName,
+  user: state.user.currentUser?state.user.currentUser.firstName:null,
   isOpen: state.toggle.confirmOpen,
 });
 
