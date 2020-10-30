@@ -374,6 +374,10 @@ class EditableBio extends Component {
                       }
                       onChange={this.setDOB}
                       customInput={<ExampleCustomInput />}
+                      peekNextMonth
+                      showMonthDropdown
+                      showYearDropdown
+                      dropdownMode="select"
                     ></DatePicker>
                     <Button
                       variantColor="teal"

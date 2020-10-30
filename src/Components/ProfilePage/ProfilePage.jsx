@@ -38,8 +38,9 @@ class ProfilePage extends Component {
   onFileChange = (event) => {
     this.setState({ selectedFile: event.target.files[0] });
   };
-  onFileUpload = async () => {
+  onFileUpload = async (e) => {
     try {
+      e.preventDefault();
       this.setState({ isLoadingUploadPhoto: true });
       const data = new FormData();
       data.append("image", this.state.selectedFile);
@@ -51,6 +52,7 @@ class ProfilePage extends Component {
       this.setState({
         isLoadingUploadPhoto: false,
         profilePicture: res.profilePictureUrl,
+        selectedFile: null,
       });
       console.log(profile);
     } catch (err) {
@@ -91,25 +93,73 @@ class ProfilePage extends Component {
               <Avatar
                 h={200}
                 w={200}
-                name="Segun Adebayo"
+                name={this.state.user.firstName}
                 src={this.state.profilePicture}
                 mb={5}
               />
             </Skeleton>
             <Skeleton mt={5} isLoaded={!this.state.isLoading}>
-              <FormControl>
-                <Input
-                  type="file"
-                  size="sm"
-                  onChange={this.onFileChange}
-                ></Input>
-                <Button
-                  isLoading={this.state.isLoadingUploadPhoto}
-                  onClick={this.onFileUpload}
+              <Accordion allowToggle py={5}>
+                <AccordionItem
+                  borderTop="none"
+                  borderBottom="none"
+                  defaultIsOpen={false}
                 >
-                  Upload
-                </Button>
-              </FormControl>
+                  {({ isExpanded }) => (
+                    <>
+                      <Flex justify="space-between">
+                        <Box flex="100%" pb={isExpanded ? 4 : 8} pt={8}>
+                          <Text
+                            fontFamily="montserrat"
+                            fontSize={isExpanded ? 13 : 14}
+                            as="i"
+                            fontSize={12}
+                          >
+                            {isExpanded
+                              ? " "
+                              : `Expand to update Profile Picture`}
+                          </Text>
+                        </Box>
+                        <AccordionHeader
+                          flex={1}
+                          _hover={{ bg: "none" }}
+                          _focus={{ outline: "none" }}
+                        >
+                          <Button
+                            variant="link"
+                            variantColor="teal"
+                            _focus={{ outline: "none" }}
+                          >
+                            {isExpanded ? "Collapse" : "Edit"}
+                          </Button>
+                        </AccordionHeader>
+                      </Flex>
+                      <AccordionPanel mb={4}>
+                        <form onSubmit={this.onFileUpload}>
+                          <Flex>
+                            <FormControl>
+                              <Input
+                                type="file"
+                                size="sm"
+                                onChange={this.onFileChange}
+                                border="none"
+                              ></Input>
+                              <Button
+                                isLoading={this.state.isLoadingUploadPhoto}
+                                mt={5}
+                                variantColor="teal"
+                                type="submit"
+                              >
+                                Upload
+                              </Button>
+                            </FormControl>
+                          </Flex>
+                        </form>
+                      </AccordionPanel>
+                    </>
+                  )}
+                </AccordionItem>
+              </Accordion>
             </Skeleton>
           </Flex>
         </Flex>
