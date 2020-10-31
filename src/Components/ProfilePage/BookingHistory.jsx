@@ -45,6 +45,8 @@ class BookingHistory extends Component {
                       : "https://www.gingerhotels.com/resourcefiles/hotelprofile/ginger-thane-hotel-th.jpg"
                   }
                   alt="Listing Image"
+                  w="100%"
+                  h="240px"
                 />
 
                 <Box p="6">

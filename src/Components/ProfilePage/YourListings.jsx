@@ -40,6 +40,8 @@ class BookingHistory extends Component {
                 <Image
                   src={listing.listingImage.url}
                   alt="No Preview available"
+                  h="240px"
+                  w="100%"
                 />
 
                 <Box p="6" my={2}>
